@@ -222,7 +222,7 @@ var frostedPanel = {
     'h' : null
   },
 
-  toggle_auto : function(on, type, margin) {
+  toggle_auto : function(on, type, margin, viewPortWidthOrHeightPx) {
     var a = this.auto[type];
     // Before panel w/h is set to auto, we need to set cotent w/h to auto
     // in order to shrinkwrap content and get an appropriate measurement.
@@ -231,19 +231,22 @@ var frostedPanel = {
       this.auto[type] = true;
     // On the contrary, before panel w/h is set to px/% "fixed value",
     // we need to set the content w/h to calc(100% - margin)
-    } else if (a === null && on === false || a === true && on === false) {
-      this.e.content.style[(type === 'w') ? 'width' : 'height'] = 'calc(100% - '+margin+'px)';
+    } else {
+      var contentWidthOrHeight = viewPortWidthOrHeightPx - margin;
+      this.e.content.style[(type === 'w') ? 'width' : 'height'] = contentWidthOrHeight + 'px';
       this.auto[type] = false;
     }
   },
 
   get_pixel_val : function(val, viewPortWidthOrHeight, type, margin) {
     if (val.endsWith('%')) {
-      this.toggle_auto(false, type, margin);
-      return (viewPortWidthOrHeight/100)*val.replace('%', '');
+      var px = (viewPortWidthOrHeight/100)*val.replace('%', '');
+      this.toggle_auto(false, type, margin, px);
+      return px;
     } else if (val.endsWith('px')) {
-      this.toggle_auto(false, type, margin);
-      return parseInt(val.replace('px', ''));
+      var px = parseInt(val.replace('px', ''));
+      this.toggle_auto(false, type, margin, px);
+      return px;
     } else if (val.toLowerCase() === 'auto') {
       this.toggle_auto(true, type, margin);
       return ((type === 'w') ? (this.e.content.clientWidth) : this.e.content.clientHeight)+margin;
