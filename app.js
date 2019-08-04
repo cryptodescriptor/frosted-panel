@@ -187,7 +187,7 @@ var frostedPanel = {
     return true;
   },
 
-  suitable_breakpoint : function(breakpoint, viewPortWidth) {
+  is_suitable_breakpoint : function(breakpoint, viewPortWidth) {
     var condition;
 
     if (this.max_width === true) {
@@ -197,6 +197,20 @@ var frostedPanel = {
     }
 
     return (condition === true) ? true : false;
+  },
+
+  find_suitable_breakpoint : function(viewPortWidth) {
+    var current, breakpoint = null;
+
+    for (var i = 0; i < this.config.breakpoints.length; i++) {
+      current = this.config.breakpoints[i];
+      if (this.is_suitable_breakpoint(current, viewPortWidth)) {
+        breakpoint = current;
+        continue;
+      }
+      break;
+    }
+    return breakpoint;
   },
 
   fetch_breakpoint : function(viewPortWidth) {
@@ -209,18 +223,7 @@ var frostedPanel = {
       if (viewPortWidth < this.config.breakpoints[0][0]) return null;
     }
 
-    // find suitable breakpoint
-    var current, breakpoint = null;
-
-    for (var i = 0; i < this.config.breakpoints.length; i++) {
-      current = this.config.breakpoints[i];
-      if (this.suitable_breakpoint(current, viewPortWidth)) {
-        breakpoint = current;
-        continue;
-      }
-      break;
-    }
-    return breakpoint;
+    return this.find_suitable_breakpoint(viewPortWidth);
   },
 
   auto : {
