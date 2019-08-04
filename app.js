@@ -217,6 +217,7 @@ var frostedPanel = {
     // if breakpoints are empty
     if (this.config.breakpoints.length === 0) return null;
 
+    // if we don't currently need a breakpoint
     if (this.max_width === true) {
       if (viewPortWidth > this.config.breakpoints[0][0]) return null;
     } else {
