@@ -217,13 +217,36 @@ var frostedPanel = {
     return breakpoint;
   },
 
+  auto : {
+    'w' : null,
+    'h' : null
+  },
+
+  toggle_auto : function(on, type, margin) {
+    var a = this.auto[type];
+    // Before panel w/h is set to auto, we need to set cotent w/h to auto
+    // in order to shrinkwrap content and get an appropriate measurement.
+    if (a === null && on === true || a === false && on === true) {
+      this.e.content.style[(type === 'w') ? 'width' : 'height'] = 'auto';
+      this.auto[type] = true;
+    // On the contrary, before panel w/h is set to px/% "fixed value",
+    // we need to set the content w/h to calc(100% - margin)
+    } else if (a === null && on === false || a === true && on === false) {
+      this.e.content.style[(type === 'w') ? 'width' : 'height'] = 'calc(100% - '+margin+'px)';
+      this.auto[type] = false;
+    }
+  },
+
   get_pixel_val : function(val, viewPortWidthOrHeight, type, margin) {
     if (val.endsWith('%')) {
+      this.toggle_auto(false, type, margin);
       return (viewPortWidthOrHeight/100)*val.replace('%', '');
     } else if (val.endsWith('px')) {
+      this.toggle_auto(false, type, margin);
       return parseInt(val.replace('px', ''));
     } else if (val.toLowerCase() === 'auto') {
-      return ((type === 'w') ? (this.e.content.scrollWidth) : this.e.content.scrollHeight)+margin;
+      this.toggle_auto(true, type, margin);
+      return ((type === 'w') ? (this.e.content.clientWidth) : this.e.content.clientHeight)+margin;
     }
   },
 
