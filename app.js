@@ -232,14 +232,15 @@ var frostedPanel = {
   },
 
   toggle_auto : function(on, type, margin, viewPortWidthOrHeightPx) {
+    // Toggles content div width/height between fixed and auto when appropriate
+    // in order to be able to effectively calculate actual content 
+    // width and preserve content margins
     var a = this.auto[type];
-    // Before panel w/h is set to auto, we need to set cotent w/h to auto
-    // in order to shrinkwrap content and get an appropriate measurement.
+    // Set content width/height to auto before panel width/height is auto
     if (a === null && on === true || a === false && on === true) {
       this.e.content.style[(type === 'w') ? 'width' : 'height'] = 'auto';
       this.auto[type] = true;
-    // On the contrary, before panel w/h is set to px/% "fixed value",
-    // we need to set the content w/h to calc(100% - margin)
+    // Set content width/height to fixed before panel width/height is "fixed"
     } else {
       var contentWidthOrHeight = viewPortWidthOrHeightPx - margin;
       this.e.content.style[(type === 'w') ? 'width' : 'height'] = contentWidthOrHeight + 'px';
