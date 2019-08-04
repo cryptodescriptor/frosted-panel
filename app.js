@@ -1,0 +1,307 @@
+// endsWith polyfill IE11
+if (!String.prototype.endsWith) {
+  String.prototype.endsWith = function(search, this_len) {
+      if (this_len === undefined || this_len > this.length) {
+          this_len = this.length;
+      }
+      return this.substring(this_len - search.length, this_len) === search;
+  };
+}
+
+var frostedPanel = {
+  e : {
+    img : document.querySelector('image'),
+    svg : document.querySelector('svg'),
+    panel : document.querySelector('.frosted-panel'),
+    content : document.querySelector('.content'),
+    body : document.body,
+    html : document.documentElement
+  },
+
+  get imageWidth() {
+    return this.e.img.getAttribute('width');
+  },
+
+  get imageHeight() {
+    return this.e.img.getAttribute('height');
+  },
+
+  get paddingTopBot() {
+    return parseInt(
+      this.e.body.getAttribute('space-top-bot')
+    ) || 0;
+  },
+
+  get content_margin()  { 
+    return parseInt(
+      this.e.content.getAttribute('content-margin')
+    ) || 0;
+  },
+
+  get br_type() {
+    return this.e.panel.getAttribute('breakpoint-type') || 'min-width';
+  },
+
+  get max_width() {
+    return this.br_type.toLowerCase() === 'max-width';
+  },
+
+  config : {
+    'width' : undefined,
+    'height' : undefined,
+    'breakpoints' : []
+  },
+
+  error : function(s) {
+    console.log(s)
+  },
+
+  valid_num : function(str) {
+    return (!isNaN(str) && str != "" && str != null);
+  },
+
+  validate_wh : function(val) {
+    var val = val.toLowerCase();
+    var num;
+
+    if (val === 'auto') {
+      return true;
+    } else if (!val.endsWith('px') && !val.endsWith('%')) {
+      return false;
+    } else if (val.endsWith('px')) {
+      num = this.valid_num(val.replace('px', ''));
+    } else if (val.endsWith('%')) {
+      num = this.valid_num(val.replace('%', ''));
+    }
+
+    return (!num) ? false : true;
+  },
+
+  ignoring_breakpoint_err : function(breakpoint) {
+    this.error('Ignoring breakpoint: "' + breakpoint + '"');
+  },
+
+  invalid_breakpoint_err : function(breakpoint, val, i) {
+    var joined = breakpoint.join(' ');
+
+    this.error('Invalid value "' + val + '" at breakpoint: "' + 
+      joined + '", index: ' + i);
+
+    this.ignoring_breakpoint_err(joined);
+  },
+
+  valid_breakpoint : function(breakpoint) {
+    // should be 3 in length
+    if (breakpoint.length !== 3) {
+      var joined = breakpoint.join(' ');
+      this.error('Expected 3 values at breakpoint: "' + joined + '"');
+      this.ignoring_breakpoint_err(joined);
+      return false;
+    }
+
+    // validate actual breakpoint width
+    var b = breakpoint[0].toLowerCase();
+
+    // make sure breakpoint ends with px and is a number
+    if (!b.endsWith('px') || !this.valid_num(b.replace('px', ''))) {
+      this.invalid_breakpoint_err(breakpoint, b, 0);
+      return false;
+    }
+
+    // validate width and height values
+    var val;
+
+    for (var i = 1; i < 3; i++) {
+      val = breakpoint[i];
+
+      if (!this.validate_wh(val)) {
+        this.invalid_breakpoint_err(breakpoint, val, i);
+        return false;
+      }
+    }
+    return true;
+  },
+
+  load_breakpoints : function() {
+    // check for breakpoint attr
+    var panel_breakpoints = this.e.panel.getAttribute('breakpoints');
+
+    // if attribute missing, return
+    if (!panel_breakpoints) return;
+
+    var breakpoints = panel_breakpoints.split(',');
+
+    var breakpoint;
+
+    for (var i = 0; i < breakpoints.length; i++) {
+      // breakpoint, width, height
+      breakpoint = breakpoints[i].trim().split(' ');
+
+      // store breakpoint as a number
+      if (this.valid_breakpoint(breakpoint)) {
+        breakpoint[0] = parseInt(breakpoint[0]);
+        this.config.breakpoints.push(breakpoint);
+      }
+    }
+
+    var self = this;
+
+    // sort: ascending min-width, descending max-width
+    this.config.breakpoints = this.config.breakpoints.sort(function(a, b) {
+      return (self.max_width === true) ? (b[0] - a[0]) : (a[0] - b[0]);
+    });
+  },
+
+  load_config : function() {
+    var attr = 'panel-dimensions';
+    var panel_dimensions = this.e.panel.getAttribute(attr);
+
+    // check attribute exists and isnt empty
+    if (!panel_dimensions) {
+      this.error('Empty/Missing required attr "'+attr+'"!');
+      return false;
+    }
+
+    var wh = panel_dimensions.split(' ');
+
+    // verify we have 2 values
+    if (wh.length !== 2) {
+      this.error('Unexpected length "' + wh.length + '" for "'+attr+'" attr!');
+      return false;
+    }
+
+    // validate width and height values
+    for (var i = 0; i < wh.length; i++) {
+      if (!this.validate_wh(wh[i])) {
+        this.error('Invalid value "' + wh[0] + '" for "'+attr+'" attr!');
+        return false;
+      }
+    }
+
+    this.config['width'] = wh[0];
+    this.config['height'] = wh[1];
+
+    // load breakpoints
+    this.load_breakpoints();
+
+    return true;
+  },
+
+  fetch_breakpoint : function(viewPortWidth) {
+    // if breakpoints are empty
+    if (this.config.breakpoints.length === 0) return null;
+
+    if (this.max_width === true) {
+      if (viewPortWidth > this.config.breakpoints[0][0]) return null;
+    } else {
+      if (viewPortWidth < this.config.breakpoints[0][0]) return null;
+    }
+
+    // find suitable breakpoint
+    var condition, breakpoint = null;
+
+    for (var i = 0; i < this.config.breakpoints.length; i++) {
+      if (this.max_width === true) {
+        condition = viewPortWidth <= this.config.breakpoints[i][0];
+      } else {
+        condition = viewPortWidth >= this.config.breakpoints[i][0];
+      }
+
+      if (condition === true) {
+        breakpoint = this.config.breakpoints[i];
+        continue;
+      }
+      break;
+    }
+
+    return breakpoint;
+  },
+
+  get_pixel_val : function(val, viewPortWidthOrHeight, type, margin) {
+    if (val.endsWith('%')) {
+      return (viewPortWidthOrHeight/100)*val.replace('%', '');
+    } else if (val.endsWith('px')) {
+      return parseInt(val.replace('px', ''));
+    } else if (val.toLowerCase() === 'auto') {
+      return ((type === 'w') ? (this.e.content.scrollWidth) : this.e.content.scrollHeight)+margin;
+    }
+  },
+
+  prepare_pan : function() {
+    // get viewport width and height
+    var viewPortWidth = this.e.html.clientWidth;
+    var viewPortHeight = this.e.html.clientHeight;
+
+    // Make svg behave like a background image
+    var cropX = (this.imageWidth-viewPortWidth)/2;
+    var cropY = (this.imageHeight-viewPortHeight)/2;
+
+    // see if we hit a breakpoint
+    var breakpoint = this.fetch_breakpoint(viewPortWidth);
+
+    var w, h;
+
+    if (breakpoint === null) {
+      w = this.config.width;
+      h = this.config.height;
+    } else {
+      w = breakpoint[1];
+      h = breakpoint[2];
+    }
+
+    // account for margins in width and height
+    var m = (this.content_margin*2);
+
+    var divWidth = this.get_pixel_val(w, viewPortWidth, 'w', m);
+    var divHeight = this.get_pixel_val(h, viewPortHeight, 'h', m);
+    
+    // set panel size
+    this.e.panel.style.minWidth = divWidth + 'px';
+    this.e.panel.style.minHeight = divHeight + 'px';
+
+    // set svg size
+    this.e.svg.style.minWidth = divWidth + 'px';
+    this.e.svg.style.minHeight = divHeight + 'px';
+
+    // set body minHeight for padding effect
+    this.e.body.style.minHeight = (divHeight + (this.paddingTopBot*2)) + 'px';
+
+    // calculate how much we need to pan
+    var panW = (-(viewPortWidth-divWidth)/2) - cropX;
+    var panH = (-(viewPortHeight-divHeight)/2) - cropY;
+
+    return [panW, panH];
+  },
+
+  pan : function() {
+    var pan_pxs = this.prepare_pan();
+    var panW = pan_pxs[0];
+    var panH = pan_pxs[1];
+    this.e.img.setAttribute('transform', 'translate('+panW+' '+panH+')');
+  },
+
+
+  init : function() {
+    // load config
+    var loaded = this.load_config();
+
+    console.log(this.config);
+
+    if (!loaded) {
+      this.error('Not loaded.');
+      return;
+    }
+
+    // set content margin
+    this.e.content.style.margin = this.content_margin + 'px';
+
+    // do initial pan
+    this.pan();
+  }
+}
+
+frostedPanel.init();
+
+window.addEventListener("resize", function() {
+  frostedPanel.pan();
+});
