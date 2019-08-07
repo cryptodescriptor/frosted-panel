@@ -100,7 +100,7 @@ You can configure the panel to be different sizes at different viewport width's 
 
 You should be familiar with CSS media queries that make use of `min-width` and `max-width` conditions to apply a set of styles at certain viewport width's (breakpoints).
 
-Frosted Panel gives you freedom of choice by allowing you to provide `breakpoint-type` attribute, with a value of either `min-width` (mobile first), or `max-width`. The performance impacts will be exactly the same for both, just use the one you feel the most comfortable with.
+Frosted Panel gives you freedom of choice by allowing you to provide `breakpoint-type` attribute, with a value of either `min-width` (mobile first), or `max-width`. The performance impact will be exactly the same for both, just use the one you feel the most comfortable with.
 
 Example:
 
