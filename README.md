@@ -35,7 +35,7 @@ The second place is within `main.css` under the `body` selector, where `backgrou
 
 ## Attributes
 
-Now you have your background-image all set up, you need to configure the panel size, and optionally add some breakpoints to allow you to change the sizing on different viewports.
+Now you have your background-image all set up, you need to configure the panel size, its margins, and optionally add some breakpoints to allow you to change the sizing on different viewports.
 
 For simplicity, Frosted Panel is configured using html attributes only.
 
