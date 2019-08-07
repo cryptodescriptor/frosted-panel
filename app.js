@@ -344,6 +344,8 @@ var frostedPanel = {
   started : false,
 
   ready : function(callback) {
+    // Check the background image is loaded
+    // before starting frostedPanel
     var img = document.body,
     style = img.currentStyle || window.getComputedStyle(img, false),
     src = style.backgroundImage.slice(4, -1).replace(/"/g, "");
