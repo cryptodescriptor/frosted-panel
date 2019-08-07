@@ -2,6 +2,8 @@
 
 Frosted Panel  is a cross-browser compatible library written in pure Javascript to achieve a responsive "Frosted Glass" effect.
 
+<img src="img/demo-screen" width="480">
+
 If you are trying to get the same effect [documented here](https://webdesign.tutsplus.com/tutorials/how-to-create-a-frosted-glass-effect-in-css--cms-32535) .  But need it to work on as many browsers as possible, even if they do not support `filter: blur()`, then Frosted Glass is the library for you.
 
 Check out the [live demo](https://cryptodescriptor.github.io/frosted-panel) so you can see a demonstration of what it looks like. Try re-sizing the browser to see the panels responsiveness.
