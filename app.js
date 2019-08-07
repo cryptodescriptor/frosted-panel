@@ -319,8 +319,8 @@ var frostedPanel = {
 
 
   init : function() {
-    var src = this.e.img.getAttribute('panel-bg-img');
     // set href and filter
+    var src = this.e.img.getAttribute('panel-bg-img');
     this.e.img.setAttribute('href', src);
     this.e.img.style.filter = 'url(#blurMe)';
 
