@@ -334,34 +334,11 @@ var frostedPanel = {
 
     // do initial pan
     this.pan();
-  },
-
-  started : false,
-
-  ready : function(callback) {
-    var img = document.body,
-    style = img.currentStyle || window.getComputedStyle(img, false),
-    src = style.backgroundImage.slice(4, -1).replace(/"/g, "");
-    
-    var img = new Image();
-
-    img.onload = function() {
-      if (!this.started) { 
-        this.started = true;
-        callback();
-      }
-    }
-
-    img.src = src;
-
-    if (img.complete) img.onload();
   }
 }
 
-frostedPanel.ready(function() {
-  frostedPanel.init();
+frostedPanel.init();
 
-  window.addEventListener("resize", function() {
-    frostedPanel.pan();
-  });
+window.addEventListener("resize", function() {
+  frostedPanel.pan();
 });
