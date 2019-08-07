@@ -16,9 +16,11 @@ Browsers tested thus far:
 
 Although only a few browsers are listed above, it should work on the majority of them, including Safari and Opera Mini etc.. (Currently untested so do not take my word for it).
 
+
 ## Getting Started
 
 To get started, you will need to fork this repository or [download as zip](https://github.com/cryptodescriptor/frosted-panel/archive/master.zip).
+
 
 ## Configuration
 
@@ -32,11 +34,13 @@ The first place is inside `index.html` on the attribute `xlink:href` of the `ima
 
 The second place is within `main.css` under the `body` selector, where `background-image` should be specified.
 
+
 ## Attributes
 
 Now you have your background-image all set up, you need to configure the panel size, its margins, and optionally add some breakpoints to allow you to change the sizing on different viewports.
 
 For simplicity, Frosted Panel is configured using html attributes only.
+
 
 ## Width & Height
 
@@ -55,11 +59,13 @@ Values can be one of three types: `px`, `%`, `auto`:
 | % | Percentage of viewport width or height |
 | auto | Auto width or height based on content size |
 
+
 ## Content & Content Margin
 
 All content that you wish to be inside the panel must be nested within the `div` with the class `content`. If you want to control the margin around the content (the space between the content and the edge of the panel), then you must do so by setting `content-margin` attribute on the `div`, with a value in pixels. If this attribute is missing or empty, then the margin will default to 0.
 
     <div class="content" content-margin="5px">
+
 
 ## Panel Margin
 
@@ -71,10 +77,19 @@ If you do use fixed width's, make sure the `width` is small enough to fit on the
 
 The above code will add 50px top margin and 50px bottom margin.
 
+
 ## Blur Amount (stdDeviation)
 To adjust the "blurryness" of the panel, you will need to change the value of  `stdDeviation` attribute (nested inside the `filter` element of  the `svg`). The higher the number, the more blurry your panel will be.
 
     <feGaussianBlur in="SourceGraphic" stdDeviation="7" />
+
+
+## Appending Content
+If you plan to append content to the panel programmatically then after you do, you will need to call:
+    frostedPanel.pan()
+    
+To re-calculate the `width` and `height` if they are set to `auto`.
+
 
 ## Breakpoints
 
