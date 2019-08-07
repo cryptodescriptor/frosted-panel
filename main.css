@@ -1,0 +1,97 @@
+body {
+	padding: 0;
+	margin: 0;
+	height: 100vh;
+	background-image: url('./img/bg-img.jpg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-attachment: local;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 1 0 auto;
+	flex-direction: column;
+}
+
+.frosted-panel {
+    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+svg {
+	border-radius: 5px;
+	overflow: hidden;
+	height: 0px;
+	width: 0px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: -1;
+}
+
+.content {
+	/* Do not touch! inline-block is imperative
+	to shrinkwrap content when w/h = auto */
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+}
+
+/* EVERYTHING BELOW THIS POINT IS FOR DEMO PURPOSES ONLY */
+
+.flex-container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.wh {
+	font-size: 30px;
+	font-family: 'Electrolize', sans-serif;
+	white-space: nowrap;
+}
+
+.wh:nth-child(1) {
+	display: inline;
+}
+
+.wh:nth-child(2),
+.wh:nth-child(3) {
+	display: none;
+}
+
+@media only screen and (min-width: 600px) {
+	.wh {
+		font-size: 40px;
+	}
+
+	.wh:nth-child(1),
+	.wh:nth-child(3) {
+		display: none;
+	}
+
+	.wh:nth-child(2) {
+		display: inline;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.wh {
+		font-size: 40px;
+	}
+
+	.wh:nth-child(1),
+	.wh:nth-child(2) {
+		display: none;
+	}
+
+	.wh:nth-child(3) {
+		display: inline;
+	}
+}
