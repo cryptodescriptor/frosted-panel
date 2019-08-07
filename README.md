@@ -64,7 +64,7 @@ Values can be one of three types: `px`, `%`, `auto`:
 
 ## Content & Content Margin
 
-All content that you wish to be inside the panel must be nested within the `div` with the class `content`. If you want to control the margin around the content (the space between the content and the edge of the panel), then you must do so by setting `content-margin` attribute on the `div`, with a value in pixels. If this attribute is missing or empty, then the margin will default to 0.
+All content that you wish to be inside the panel must be nested within the `content` div. If you want to control the margin around the content (the space between the content and the edge of the panel), then you must do so by setting `content-margin` attribute on the `div`, with a value in pixels. If this attribute is missing or empty, then the margin will default to 0.
 
     <div class="content" content-margin="5px">
 
@@ -79,7 +79,7 @@ To re-calculate the `width` and `height` if they are set to `auto`.
 
 ## Panel Margin
 
-On the `body` tag, you can add an optional attribute `space-top-bot`, which works by calculating the height of the panel and setting `min-height` on the body, to a value of `panel_height + (space-top-bot*2)` , every time the screen is resized. This allows us to emulate a top and bottom `margin` for our panel. Currently there is no way to set a left and right margin, I didn't add this feature because generally you will be using percentage width's for your panel anyway.
+On the `body` tag, you can add an optional attribute `space-top-bot`, which works by calculating the height of the panel, then sets `min-height` on the body to a value of `panel_height + (space-top-bot*2)` , every time the screen is resized. This allows us to emulate a top and bottom `margin` for our panel. Currently there is no way to set a left and right margin, I didn't add this feature because generally you will be using percentage width's for your panel anyway.
 
 If you do use fixed width's, make sure the `width` is small enough to fit on the viewport's of your website visitors, otherwise the panel will overflow the body.
 
@@ -89,7 +89,7 @@ The above code will add 50px top margin and 50px bottom margin.
 
 
 ## Blur Amount (stdDeviation)
-To adjust the "blurryness" of the panel, you will need to change the value of  `stdDeviation` attribute (nested inside the `filter` element of  the `svg`). The higher the number, the more blurry your panel will be.
+To adjust the "blurryness" of the panel, you will need to change the value of  `stdDeviation` attribute (nested inside the `filter` element of the `svg`). The higher the number, the more blurry your panel will be.
 
     <feGaussianBlur in="SourceGraphic" stdDeviation="7" />
 
@@ -100,7 +100,7 @@ You can configure the panel to be different sizes at different viewport width's 
 
 You should be familiar with CSS media queries that make use of `min-width` and `max-width` conditions to apply a set of styles at certain viewport width's (breakpoints).
 
-Frosted Panel gives you freedom of choice by allowing you to provide `breakpoint-type` attribute, with a value of either `min-width` (mobile first), or `max-width`. The performance impacts will be exactly the same for both, just use the one  you feel the most comfortable with.
+Frosted Panel gives you freedom of choice by allowing you to provide `breakpoint-type` attribute, with a value of either `min-width` (mobile first), or `max-width`. The performance impacts will be exactly the same for both, just use the one you feel the most comfortable with.
 
 Example:
 
