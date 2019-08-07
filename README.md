@@ -67,6 +67,14 @@ All content that you wish to be inside the panel must be nested within the `div`
     <div class="content" content-margin="5px">
 
 
+## Appending Content
+If you plan to append content to the panel programmatically, after you do so, you will need to call:
+
+    <script>frostedPanel.pan()</script>
+    
+To re-calculate the `width` and `height` if they are set to `auto`.
+
+
 ## Panel Margin
 
 On the `body` tag, you can add an optional attribute `space-top-bot`, which works by calculating the height of the panel and setting `min-height` on the body, to a value of `panel_height + (space-top-bot*2)` , every time the screen is resized. This allows us to emulate a top and bottom `margin` for our panel. Currently there is no way to set a left and right margin, I didn't add this feature because generally you will be using percentage width's for your panel anyway.
@@ -82,14 +90,6 @@ The above code will add 50px top margin and 50px bottom margin.
 To adjust the "blurryness" of the panel, you will need to change the value of  `stdDeviation` attribute (nested inside the `filter` element of  the `svg`). The higher the number, the more blurry your panel will be.
 
     <feGaussianBlur in="SourceGraphic" stdDeviation="7" />
-
-
-## Appending Content
-If you plan to append content to the panel programmatically, after you do so, you will need to call:
-
-    <script>frostedPanel.pan()</script>
-    
-To re-calculate the `width` and `height` if they are set to `auto`.
 
 
 ## Breakpoints
