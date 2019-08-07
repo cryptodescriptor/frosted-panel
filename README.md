@@ -85,8 +85,9 @@ To adjust the "blurryness" of the panel, you will need to change the value of  `
 
 
 ## Appending Content
-If you plan to append content to the panel programmatically then after you do, you will need to call:
-    frostedPanel.pan()
+If you plan to append content to the panel programmatically, after you do so, you will need to call:
+
+    <script>frostedPanel.pan()</script>
     
 To re-calculate the `width` and `height` if they are set to `auto`.
 
