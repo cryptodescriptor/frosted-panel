@@ -1,4 +1,4 @@
-# *Frosted Panel*
+# Frosted Panel
 
 Frosted Panel  is a cross-browser compatible library written in pure Javascript to acheive a responsive "Frosted Glass" effect.
 
