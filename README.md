@@ -56,7 +56,7 @@ Values can be one of three types: `px`, `%`, `auto`:
 | % | Percentage of viewport width or height |
 | auto | Auto width or height based on content size |
 
-### Content & Content Margin
+## Content & Content Margin
 
 All content that you wish to be inside the panel must be nested within the `div` with the class `content`. If you want to control the margin around the content (the space between the content and the edge of the panel), then you must do so by setting `content-margin` attribute on the `div`, with a value in pixels. If this attribute is missing or empty, then the margin will default to 0.
 
