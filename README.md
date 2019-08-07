@@ -16,11 +16,11 @@ Browsers tested thus far:
 
 Although only a few browsers are listed above, it should work on the majority of them, including Safari and Opera Mini etc.. (Currently untested so do not take my word for it).
 
-# Getting Started
+## Getting Started
 
 To get started, you will need to fork this repository or [download as zip](https://github.com/cryptodescriptor/frosted-panel/archive/master.zip).
 
-# Configuration
+## Configuration
 
 Firstly you need to select the background-image that you want to use. I recommend that it is at least  `1920x1080` pixels, but if you want to cater for 4k monitors then it will need to be even larger.
 
@@ -32,7 +32,7 @@ The first place is inside `index.html` on the attribute `xlink:href` of the `ima
 
 The second place is within `main.css` under the `body` selector, where `background-image` should be specified.
 
-# Attributes
+## Attributes
 
 Now you have your background-image all set up, you need to configure the panel size, its margins, and optionally add some breakpoints to allow you to change the sizing on different viewports.
 
