@@ -337,11 +337,8 @@ var frostedPanel = {
   }
 }
 
+frostedPanel.init();
 
-imagesLoaded(document.body, { background : true }, function() {
-  frostedPanel.init();
-
-  window.addEventListener("resize", function() {
-    frostedPanel.pan();
-  });
+window.addEventListener("resize", function() {
+  frostedPanel.pan();
 });
