@@ -27,7 +27,7 @@ Firstly you need to select the background-image that you want to use. I recommen
 
 Now that you know what image you will be using, **there are two places where you must specify the path**.
 
-The first place is inside `index.html` on the attribute `xlink:href` of the `image ` element . Please also change the `width` and `height` attributes to match the dimensions of your image. If you are using an image of `1920x1080` pixels, the `width` should have a value of `1920` and the `height` should have a value of `1080`.
+The first place is inside `index.html` on the attribute `xlink:href` of the `image ` element. Please also change the `width` and `height` attributes to match the dimensions of your image. If you are using an image of `1920x1080` pixels, the `width` should have a value of `1920` and the `height` should have a value of `1080`.
 
     <image xlink:href="./img/bg-img.jpg" x="0" y="0" width="1920" height="1080" filter="url(#blurMe)"/>
 
