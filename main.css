@@ -18,6 +18,7 @@ body {
     position: relative;
     border-radius: 5px;
     overflow: hidden;
+    visibility: hidden;
 }
 
 svg {
