@@ -2,6 +2,10 @@ body {
 	padding: 0;
 	margin: 0;
 	height: 100vh;
+	@supports (-webkit-appearance:none) {
+		.os-android & {
+		height: calc(100vh - 56px);
+	}
 	background-image: url('../img/bg1.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
