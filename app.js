@@ -15,7 +15,8 @@ var frostedPanel = {
     panel : document.querySelector('.frosted-panel'),
     content : document.querySelector('.content'),
     body : document.body,
-    html : document.documentElement
+    html : document.documentElement,
+    loading : document.querySelector('.page-loading__icon')
   },
 
   get imageWidth() {
@@ -360,7 +361,8 @@ var frostedPanel = {
 }
 
 frostedPanel.ready(function() {
-  frostedPanel.e.panel.style.visibility = 'visible';
+  frostedPanel.e.loading.style.display = 'none';
+  frostedPanel.e.panel.style.display = 'block';
 });
 
 frostedPanel.init();
