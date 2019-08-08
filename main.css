@@ -1,14 +1,11 @@
-html {
-	/* Change to something close to your
-	background-image colour scheme, or remove
-	entirely. It just makes loading look better */
-	background-color: #8cbfdc;
-}
-
 body {
 	padding: 0;
 	margin: 0;
 	height: 100vh;
+	/* Change color to something close to your
+	background-image color scheme, or remove
+	entirely. It just makes loading look better */
+	background-color: #8cbfdc;
 	background-image: url('https://raw.githubusercontent.com/cryptodescriptor/frosted-panel/master/img/bg1.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
@@ -36,7 +33,7 @@ svg {
 	position: absolute;
 	top: 0;
 	right: 0;
-	z-index: 1;
+	z-index: -1;
 }
 
 .content {
@@ -46,7 +43,7 @@ svg {
 	position: absolute;
 	top: 0;
 	right: 0;
-	z-index: 2;
+	z-index: 1;
 }
 
 @-webkit-keyframes delayedSpinner {
