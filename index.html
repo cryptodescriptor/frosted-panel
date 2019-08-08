@@ -4,19 +4,32 @@
 	<title>Frosted Panel Demo</title>
 
 	<link rel="stylesheet" type="text/css" href="./main.css">
+	
 	<!-- Font is for demo purposes only -->
-	<link href="https://fonts.googleapis.com/css?family=Electrolize&display=swap" rel="stylesheet"> 
+	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+	<link rel="preload" href="https://raw.githubusercontent.com/cryptodescriptor/frosted-panel/master/fonts/Electrolize.woff2" as="font" crossorigin>
+
+	<style type="text/css">
+		@font-face {
+			font-family: 'Electrolize';
+			font-style: normal;
+			font-weight: 400;
+			font-display: swap;
+			src: local('Electrolize'), local('Electrolize-Regular'), url(https://raw.githubusercontent.com/cryptodescriptor/frosted-panel/master/fonts/Electrolize.woff2) format('woff2');
+			unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+		}
+	</style>
 </head>
 <body space-top-bot="50px">
 	<div class="page-loading__icon"></div>
-	
+
 	<div class="frosted-panel" panel-dimensions="auto auto" breakpoint-type="min-width" breakpoints="600px 80% 80%, 1200px 60% 500px">
 		<svg>
 			<filter id="blurMe">
 				<feGaussianBlur in="SourceGraphic" stdDeviation="7" />
 			</filter>
 
-			<image href="https://raw.githubusercontent.com/cryptodescriptor/frosted-panel/master/img/bg1.jpg" x="0" y="0" width="2880" height="1620" filter="url(#blurMe)"/>
+			<image href="./img/bg1.jpg" x="0" y="0" width="2880" height="1620" filter="url(#blurMe)"/>
 		</svg>
 
 		<div class="content" content-margin="5px">
