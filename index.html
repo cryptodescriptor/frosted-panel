@@ -6,13 +6,6 @@
 	<link rel="stylesheet" type="text/css" href="./css/loading.css">
 	<link rel="stylesheet" type="text/css" href="./css/main.css">
 	
-	<script type="text/javascript">
-		// fix for android devices to set vh while
-		// taking browser interface into account
-		var vh = window.innerHeight * 0.01;
-		document.body.style.setProperty('--vh', vh + 'px');
-	</script>
-	
 	<!-- Font is for demo purposes only -->
 	<link rel="preload" href="./fonts/Electrolize.woff2" as="font" crossorigin>
 
@@ -49,7 +42,14 @@
 			</div>
 		</div>
 	</div>
-
+	
+	<script type="text/javascript">
+		// fix for android devices to set vh while
+		// taking browser interface into account
+		var vh = window.innerHeight * 0.01;
+		document.body.style.setProperty('--vh', vh + 'px');
+	</script>
+	
 	<script src="./app.js"></script>
 </body>
 </html>
