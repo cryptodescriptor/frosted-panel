@@ -326,9 +326,6 @@ var frostedPanel = {
   },
 
   init : function() {
-    // set viewport height
-    this.setViewportHeight();
-
     // load config
     var loaded = this.load_config();
 
