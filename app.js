@@ -378,15 +378,14 @@ var frostedPanel = {
     // Hide loading and display panel
     this.e.loading.style.display = 'none';
     this.e.panel.style.visibility = 'visible';
-
-    // Start resize EventListener
-    this.startListener();
   }
 }
 
 var loaded = frostedPanel.load_config();
 
 if (loaded) {
+  frostedPanel.startListener();
+  
   frostedPanel.ready(function() {
     frostedPanel.init();
   });
