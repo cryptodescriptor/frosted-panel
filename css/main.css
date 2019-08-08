@@ -3,7 +3,6 @@ body {
 	margin: 0;
 	height: 100vh; /* fallback */
 	height: calc(var(--vh, 1vh) * 100);
-	background-image: url('../img/bg1.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-attachment: local;
