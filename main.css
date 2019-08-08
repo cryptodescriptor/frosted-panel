@@ -72,7 +72,7 @@ svg {
   overflow : hidden;
   width : 58px;
   height : 58px;
-  background : url("./img/loader-light.png") no-repeat;
+  background : url("https://raw.githubusercontent.com/cryptodescriptor/frosted-panel/master/img/loader-light.png") no-repeat;
   background-size : contain;
   -webkit-animation : delayedSpinner .61s linear infinite;
           animation : delayedSpinner .61s linear infinite;
