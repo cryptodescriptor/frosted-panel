@@ -81,7 +81,7 @@ To re-calculate the `width` and `height` if they are set to `auto`.
 
 On the `body` tag, you can add an optional attribute `space-top-bot`, which works by calculating the height of the panel, then sets `min-height` on the body to a value of `panel_height + (space-top-bot*2)` , every time the screen is resized. This allows us to emulate a top and bottom `margin` for our panel. Currently there is no way to set a left and right margin, I didn't add this feature because generally you will be using percentage width's for your panel anyway.
 
-If you do use fixed width's, make sure the `width` is small enough to fit on the viewport's of your website visitors, otherwise the panel will overflow the body.
+If you do use fixed width's, make sure the panel `width` is small enough to fit on the viewport's of your website visitors, otherwise the panel will overflow the body.
 
     <body space-top-bot="50px">
 
@@ -110,7 +110,7 @@ Great! Now you have selected which media query type you will be using, you can s
 
 You do this by passing a list of breakpoints to the `breakpoints` attribute, each delimited by a single comma `,`.
 
-Each breakpoint must follow a specific format. The first value is the width in pixels that you want the breakpoint to occur at (must end with "`px`"), the second and third values are the `width` and `height` values which determine the size of the panel when the breakpoint is triggered. The `width` and `height` value's each can be one of three format's described in the "Width & Height" section.
+Each breakpoint must follow a specific format. The first value is the `width` in pixels that you want the breakpoint to occur at (must end with "`px`"), the second and third values are `width` and `height` values which determine the size of the panel when the breakpoint is triggered. The `width` and `height` value's each can be one of three format's described in the "Width & Height" section.
 
 Examples:
 
