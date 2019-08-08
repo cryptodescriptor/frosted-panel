@@ -344,12 +344,14 @@ var frostedPanel = {
   },
 
   started : false,
+  bg_img : null,
 
   ready : function(callback) {
     // Check the background image is loaded before starting frostedPanel
     var img = document.body,
-    style = img.currentStyle || window.getComputedStyle(img, false),
-    src = style.backgroundImage.slice(4, -1).replace(/"/g, "");
+    src = this.e.img.getAttribute('bg-img');
+
+    this.bg_img = src;
     
     var img = new Image();
 
@@ -369,6 +371,20 @@ var frostedPanel = {
 frostedPanel.init();
 
 frostedPanel.ready(function() {
+  var bg_img = frostedPanel.bg_img;
+
+  // Set background image
+  document.body.style.backgroundImage = 'url(' + bg_img + ')';
+
+  // Set svg image href
+  var img = frostedPanel.e.img;
+  img.setAttribute('href', bg_img);
+
+  // Apply blur filter
+  img.style.filter = 'url(#blurMe)';
+  img.style.WebkitFilter = 'url(#blurMe)';
+
+  // Hide loading and display panel
   frostedPanel.e.loading.style.display = 'none';
   frostedPanel.e.panel.style.display = 'block';
 });
