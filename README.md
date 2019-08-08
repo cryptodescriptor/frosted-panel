@@ -26,7 +26,7 @@ To get started, you will need to fork this repository or [download as zip](https
 
 ## Configuration
 
-Firstly you need to select the background-image that you want to use. I recommend a large image so that it scales on mobile devices and large monitors without the use of `background-size: cover` which isn't compatible with Frosted Glass (because we don't know how much the browser is zooming the image). The one we use in the demo is `2880x1620` pixels and it seems to display well on my android device as well as my 1920x1080 monitor. For 4k monitor support I would suggest using an image with `4096x2149`pixels.
+Firstly you need to select the background-image that you want to use. I recommend a large image so that it scales on mobile devices and large monitors without the use of `background-size: cover` which isn't compatible with Frosted Glass (because we don't know how much the browser is zooming the image). The one we use in the demo is `2880x1620` pixels and it seems to display well on my android device as well as my 1920x1080p monitor. For 4k monitor support I would suggest using an image with `4096x2149`pixels.
 
 Now that you know what image you will be using, **there are two places where you must specify the path**.
 
