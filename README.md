@@ -158,8 +158,8 @@ When `breakpoint-type` is changed from `min-width` to `max-width`, the CSS equiv
       }
     }
 
-With `min-width`, the frosted-panel would have a `width` and `height` of `auto` when the viewport is < `600px`. If the viewport width was between `600px` and `1200px` the panel `width` would be `70%`, and the panel height would be `300px`. And if the viewport width was > `1200px` then the panel `width` would be `60%` and the panel `height` would be `500px`.
+With `min-width`, the frosted-panel would have a `width` and `height` of `auto` when the viewport is < `600px`. If the viewport width was between `600px` and `1200px` the panel `width` would be `70%`, and the panel `height` would be `300px`. And if the viewport `width` was > `1200px` then the panel `width` would be `60%` and the panel `height` would be `500px`.
 
-Whereas, if we used `max-width` instead, the frosted-panel would have a `width` of `70%` and a `height` of `300px` if the viewport was < `600px`. If the viewport was between `600px` and `1200px`, then the panel width would be `60%`, and the panel `height` would be `500px`. If the viewport was any larger than `1200px` then the panel `width` and `height` would both be `auto`.
+Whereas, if we used `max-width` instead, and the viewport was < `600px`, then the frosted-panel would have a `width` of `70%` and a `height` of `300px`. If the viewport was between `600px` and `1200px`, then the panel `width` would be `60%`, and the panel `height` would be `500px`. If the viewport was any larger than `1200px` then the panel `width` and `height` would both be set to `auto`.
 
 As you can see, the breakpoint attributes emulate standard CSS media queries. And are mandatory if you wish to use media queries to control the size of Frosted Panel.
