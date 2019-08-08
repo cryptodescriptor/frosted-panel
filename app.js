@@ -360,9 +360,11 @@ var frostedPanel = {
 }
 
 frostedPanel.ready(function() {
-  frostedPanel.init();
+  frostedPanel.e.panel.style.visibility = 'visible';
+});
 
-  window.addEventListener("resize", function() {
-    frostedPanel.pan();
-  });
+frostedPanel.init();
+
+window.addEventListener("resize", function() {
+  frostedPanel.pan();
 });
