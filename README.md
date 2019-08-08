@@ -32,7 +32,7 @@ Now that you know what image you will be using, **there are two places where you
 
 The first place is inside `index.html` on the attribute `panel-bg-img` of the `image` element. Please also change the `width` and `height` attributes to match the dimensions of your image. If you are using an image of `2880x1620` pixels, the `width` should have a value of `2880` and the `height` should have a value of `1620`.
 
-    <image panel-bg-img="./img/bg.jpg" x="0" y="0" width="2880" height="1620" />
+    <image panel-bg-img="./img/bg.jpg" x="0" y="0" width="2880" height="1620" filter="url(#blurme)" />
 
 The second place is within `main.css` under the `body` selector, where `background-image` should be specified.
 
