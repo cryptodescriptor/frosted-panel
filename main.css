@@ -42,6 +42,42 @@ svg {
 	z-index: 1;
 }
 
+@-webkit-keyframes delayedSpinner {
+  0% {
+    -webkit-transform:rotate(0deg);
+            transform:rotate(0deg);
+    opacity : 1
+  }
+  to {
+    -webkit-transform:rotate(1turn);
+            transform:rotate(1turn);
+    opacity : 1
+  }
+}
+
+@keyframes delayedSpinner {
+  0% {
+    -webkit-transform:rotate(0deg);
+            transform:rotate(0deg);
+    opacity : 1
+  }
+  to {
+    -webkit-transform:rotate(1turn);
+            transform:rotate(1turn);
+    opacity : 1
+  }
+}
+
+.page-loading__icon {
+  overflow : hidden;
+  width : 58px;
+  height : 58px;
+  background : url("./img/loader-light.png") no-repeat;
+  background-size : contain;
+  -webkit-animation : delayedSpinner .61s linear infinite;
+          animation : delayedSpinner .61s linear infinite;
+}
+
 /* EVERYTHING BELOW THIS POINT IS FOR DEMO PURPOSES ONLY */
 
 .flex-container {
