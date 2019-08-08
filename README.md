@@ -4,7 +4,7 @@ Frosted Panel  is a cross-browser compatible library written in pure Javascript 
 
 <img src="img/demo-screen.jpg" width="100%">
 
-If you are trying to get the same effect [documented here](https://webdesign.tutsplus.com/tutorials/how-to-create-a-frosted-glass-effect-in-css--cms-32535) .  But need it to work on as many browsers as possible, even if they do not support `filter: blur()`, then Frosted Glass is the library for you.
+If you are trying to get the same effect [documented here](https://webdesign.tutsplus.com/tutorials/how-to-create-a-frosted-glass-effect-in-css--cms-32535), but need it to work on as many browsers as possible, even if they do not support `filter: blur()`, then Frosted Glass is the library for you.
 
 Check out the [live demo](https://cryptodescriptor.github.io/frosted-panel) so you can see a demonstration of what it looks like. Try re-sizing the browser to see the panels responsiveness.
 
@@ -26,13 +26,13 @@ To get started, you will need to fork this repository or [download as zip](https
 
 ## Configuration
 
-Firstly you need to select the background-image that you want to use. I recommend that it is at least  `1920x1080` pixels, but if you want to cater for 4k monitors then it will need to be even larger.
+Firstly you need to select the background-image that you want to use. I recommend a large image so that it scales on mobile devices and large monitors without the use of `background-size: cover` which isn't compatible with Frosted Glass (because we don't know how much the browser is zooming the image). The one we use in the demo is `2880x1620` pixels and it seems to display well on my android device as well as my 1920x1080 monitor. For 4k monitor support I would suggest using an image with `4096x2149`pixels.
 
 Now that you know what image you will be using, **there are two places where you must specify the path**.
 
-The first place is inside `index.html` on the attribute `panel-bg-img` of the `image` element. Please also change the `width` and `height` attributes to match the dimensions of your image. If you are using an image of `1920x1080` pixels, the `width` should have a value of `1920` and the `height` should have a value of `1080`.
+The first place is inside `index.html` on the attribute `panel-bg-img` of the `image` element. Please also change the `width` and `height` attributes to match the dimensions of your image. If you are using an image of `2880x1620` pixels, the `width` should have a value of `2880` and the `height` should have a value of `1620`.
 
-    <image panel-bg-img="./img/bg-img.jpg" x="0" y="0" width="1920" height="1080" />
+    <image panel-bg-img="./img/bg.jpg" x="0" y="0" width="2880" height="1620" />
 
 The second place is within `main.css` under the `body` selector, where `background-image` should be specified.
 
