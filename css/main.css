@@ -19,6 +19,9 @@ body {
 	border-radius: 5px;
 	overflow: hidden;
 	display: none;
+	/* GPU Acceleration */
+	-webkit-transform: translateZ(0);
+	transform: translateZ(0);
 }
 
 svg {
