@@ -28,7 +28,4 @@
   background-size : contain;
   -webkit-animation : delayedSpinner .61s linear 0s infinite;
           animation : delayedSpinner .61s linear 0s infinite;
-  /* GPU Acceleration */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
 }
