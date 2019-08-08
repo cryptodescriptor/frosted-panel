@@ -2,10 +2,6 @@ body {
 	padding: 0;
 	margin: 0;
 	height: 100vh;
-	/* Change color to something close to your
-	background-image color scheme, or remove
-	entirely. It just makes loading look better */
-	background-color: #8cbfdc;
 	background-image: url('https://raw.githubusercontent.com/cryptodescriptor/frosted-panel/master/img/bg1.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
