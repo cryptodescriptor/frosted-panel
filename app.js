@@ -14,7 +14,6 @@ var frostedPanel = {
     svg : document.querySelector('svg'),
     panel : document.querySelector('.frosted-panel'),
     content : document.querySelector('.content'),
-    body : document.body,
     html : document.documentElement,
     loading : document.querySelector('.page-loading__icon')
   },
@@ -29,7 +28,7 @@ var frostedPanel = {
 
   get paddingTopBot() {
     return parseInt(
-      this.e.body.getAttribute('space-top-bot')
+      document.body.getAttribute('space-top-bot')
     ) || 0;
   },
 
@@ -302,7 +301,7 @@ var frostedPanel = {
     this.e.svg.style.minHeight = divHeight + 'px';
 
     // set body minHeight for padding effect
-    this.e.body.style.minHeight = (divHeight + (this.paddingTopBot*2)) + 'px';
+    document.body.style.minHeight = (divHeight + (this.paddingTopBot*2)) + 'px';
 
     // calculate how much we need to pan
     var panW = (-(viewPortWidth-divWidth)/2) - cropX;
@@ -322,25 +321,7 @@ var frostedPanel = {
     // fix for android devices to set vh while
     // taking browser interface into account
     var vh = window.innerHeight * 0.01;
-    this.e.body.style.setProperty('--vh', vh + 'px');
-  },
-
-  init : function() {
-    // load config
-    var loaded = this.load_config();
-
-    console.log(this.config);
-
-    if (!loaded) {
-      this.error('Not loaded.');
-      return;
-    }
-
-    // set content margin
-    this.e.content.style.margin = this.content_margin + 'px';
-
-    // do initial pan
-    this.pan();
+    document.body.style.setProperty('--vh', vh + 'px');
   },
 
   started : false,
@@ -348,8 +329,7 @@ var frostedPanel = {
 
   ready : function(callback) {
     // Check the background image is loaded before starting frostedPanel
-    var img = document.body,
-    src = this.e.img.getAttribute('bg-img');
+    var src = this.e.img.getAttribute('bg-img');
 
     this.bg_img = src;
     
@@ -365,31 +345,51 @@ var frostedPanel = {
     img.src = src;
 
     if (img.complete) img.onload();
+  },
+
+  startListener : function() {
+    window.addEventListener("resize", function() {
+      frostedPanel.setViewportHeight();
+      frostedPanel.pan();
+    });
+  },
+
+  init : function() {
+    var bg = this.bg_img;
+
+    // Set background image
+    document.body.style.backgroundImage = 'url(' + bg + ')';
+
+    var img = this.e.img;
+
+    // Set svg image href
+    img.setAttribute('href', bg);
+
+    // Apply blur filter
+    img.style.filter = 'url(#blurMe)';
+    img.style.WebkitFilter = 'url(#blurMe)';
+
+    // Set content margin
+    this.e.content.style.margin = frostedPanel.content_margin + 'px';
+
+    // Do initial pan
+    this.pan();
+
+    // Hide loading and display panel
+    this.e.loading.style.display = 'none';
+    this.e.panel.style.visibility = 'visible';
+
+    // Start resize EventListener
+    this.startListener();
   }
 }
 
-frostedPanel.init();
+var loaded = frostedPanel.load_config();
 
-frostedPanel.ready(function() {
-  var bg_img = frostedPanel.bg_img;
-
-  // Set background image
-  document.body.style.backgroundImage = 'url(' + bg_img + ')';
-
-  // Set svg image href
-  var img = frostedPanel.e.img;
-  img.setAttribute('href', bg_img);
-
-  // Apply blur filter
-  img.style.filter = 'url(#blurMe)';
-  img.style.WebkitFilter = 'url(#blurMe)';
-
-  // Hide loading and display panel
-  frostedPanel.e.loading.style.display = 'none';
-  frostedPanel.e.panel.style.display = 'block';
-});
-
-window.addEventListener("resize", function() {
-  frostedPanel.setViewportHeight();
-  frostedPanel.pan();
-});
+if (loaded) {
+  frostedPanel.ready(function() {
+    frostedPanel.init();
+  });
+} else {
+  frostedPanel.error('frostedPanel aborted!');
+}
