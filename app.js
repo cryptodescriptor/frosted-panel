@@ -363,6 +363,7 @@ var frostedPanel = {
 frostedPanel.ready(function() {
   frostedPanel.e.loading.style.display = 'none';
   frostedPanel.e.panel.style.display = 'block';
+  frostedPanel.e.img.style.filter = 'url(#blurMe)';
 });
 
 frostedPanel.init();
