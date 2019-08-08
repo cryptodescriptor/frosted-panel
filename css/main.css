@@ -2,7 +2,7 @@ body {
 	padding: 0;
 	margin: 0;
 	height: 100vh;
-	background-image: url('https://raw.githubusercontent.com/cryptodescriptor/frosted-panel/master/img/bg1.jpg');
+	background-image: url('./img/bg1.jpg');
 	background-position: center;
 	background-repeat: no-repeat;
 	background-attachment: local;
