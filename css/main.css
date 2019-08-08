@@ -30,9 +30,6 @@ svg {
 	top: 0;
 	right: 0;
 	z-index: -1;
-	/* GPU Acceleration */
-	-webkit-transform: translateZ(0);
-	transform: translateZ(0);
 }
 
 .content {
