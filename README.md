@@ -10,7 +10,6 @@ Check out the [live demo](https://cryptodescriptor.github.io/frosted-panel) so y
 
 Browsers tested thus far:
 
-
 - Chrome
 - Firefox
 - Edge
