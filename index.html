@@ -47,6 +47,11 @@
 		// fix for android devices to set vh while taking browser interface into account
 		var vh = window.innerHeight * 0.01;
 		document.body.style.setProperty('--vh', vh + 'px');
+
+		window.addEventListener("resize", function() {
+			var vh = window.innerHeight * 0.01;
+			document.body.style.setProperty('--vh', vh + 'px');
+		});
 	</script>
 	
 	<script src="./app.js"></script>
