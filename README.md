@@ -25,8 +25,8 @@ To get started, you will need to fork this repository or [download as zip](https
 
 
 ## Configuration
-
-Firstly you need to select the background-image that you want to use. I recommend a large image so that it scales on mobile devices and large monitors without the use of `background-size: cover` which isn't compatible with Frosted Glass (because we don't know how much the browser is zooming the image). The one we use in the demo is `2880x1620` pixels and it seems to display well on my android device as well as my 1920x1080p monitor. For 4k monitor support I would suggest using an image with `4096x2149`pixels.
+ 
+Firstly, you will need to select the background-image you want to use. I recommend using a large image so that it covers the full height of the viewport on mobile devices. You can't use `background-size: cover` with Frosted Glass because we don't know how much the browser is zooming the image so can't factor it into our calculations. The image we use in the demo is `2880x1620` pixels and it seems to display well on my Android device running Chrome, as well as my 1920x1080p monitor. For 4k monitor support I would suggest using an image with `4096x2149`pixels.
 
 Now that you know what image you will be using, you must specify the path inside `index.html` on the attribute `bg-img` of the `image` element. Please also change the `width` and `height` attributes to match the dimensions of your image. If you are using an image of `2880x1620` pixels, the `width` should have a value of `2880` and the `height` should have a value of `1620`.
 
@@ -59,7 +59,7 @@ Values can be one of three types: `px`, `%`, `auto`:
 
 ## Content & Content Margin
 
-All content that you wish to be inside the panel must be nested within the `content` div. If you want to control the margin around the content (the space between the content and the edge of the panel), then you must do so by setting `content-margin` attribute on the `div`, with a value in pixels. If this attribute is missing or empty, then the margin will default to 0.
+All the content that you wish to be inside the panel, must be nested within the `content` div. If you want to control the margin around the content (the space between the content and the edge of the panel), then you must do so by setting `content-margin` attribute on the `div`, with a pixel value. If this attribute is missing or empty, then the margin will default to 0.
 
     <div class="content" content-margin="5px">
 
@@ -74,7 +74,7 @@ To re-calculate the `width` and `height` if they are set to `auto`.
 
 ## Panel Margin
 
-On the `body` tag, you can add an optional attribute `space-top-bot`, which works by calculating the height of the panel, then sets `min-height` on the body to a value of `panel_height + (space-top-bot*2)` , every time the screen is resized. This allows us to emulate a top and bottom `margin` for our panel. Currently there is no way to set a left and right margin, I didn't add this feature because generally you will be using percentage width's for your panel anyway.
+On the `body` tag, you can add an optional attribute `space-top-bot`, which works by calculating the height of the panel, then sets `min-height` on the body to a value of `panel_height + (space-top-bot*2)`, every time the screen is resized. This allows us to emulate a top and bottom `margin` for our panel. Currently there is no way to set a left and right margin, I didn't add this feature because generally you will be using percentage width's for your panel anyway.
 
 If you do use fixed width's, make sure the panel `width` is small enough to fit on the viewport's of your website visitors, otherwise the panel will overflow the body.
 
