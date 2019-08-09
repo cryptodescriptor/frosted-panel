@@ -372,6 +372,9 @@ var frostedPanel = {
     // Set content margin
     this.e.content.style.margin = frostedPanel.content_margin + 'px';
 
+    // Start Resize Listener
+    this.startListener();
+
     // Do initial pan
     this.pan();
 
@@ -384,8 +387,6 @@ var frostedPanel = {
 var loaded = frostedPanel.load_config();
 
 if (loaded) {
-  frostedPanel.startListener();
-  
   frostedPanel.ready(function() {
     frostedPanel.init();
   });
