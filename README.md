@@ -11,9 +11,9 @@ Check out the [live demo](https://cryptodescriptor.github.io/frosted-panel) so y
 Browsers tested thus far:
 
 
- - Chrome
- - Firefox
- - Edge
+- Chrome
+- Firefox
+- Edge
 - Internet Explorer
 
 Although only a few browsers are listed above, it should work on the majority of them, including Safari and Opera Mini etc.. (Currently untested so do not take my word for it).
