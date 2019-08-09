@@ -347,13 +347,6 @@ var frostedPanel = {
     if (img.complete) img.onload();
   },
 
-  startListener : function() {
-    window.addEventListener("resize", function() {
-      frostedPanel.setViewportHeight();
-      frostedPanel.pan();
-    });
-  },
-
   init : function() {
     var bg = this.bg_img;
 
@@ -373,7 +366,9 @@ var frostedPanel = {
     this.e.content.style.margin = frostedPanel.content_margin + 'px';
 
     // Start Resize Listener
-    this.startListener();
+    window.addEventListener("resize", function() {
+      frostedPanel.pan();
+    });
 
     // Do initial pan
     this.pan();
