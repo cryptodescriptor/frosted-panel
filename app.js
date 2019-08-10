@@ -283,40 +283,48 @@ var frostedPanel = {
     return [coverWidth, coverHeight, scale];
   },
 
-  prepare_pan_and_zoom : function() {
-    // Get viewport width and height
-    var viewPortWidth = this.e.html.clientWidth;
-    var viewPortHeight = this.e.html.clientHeight;
-
-    // See if we hit a breakpoint
+  get_panel_width_and_height : function(viewPortWidth, viewPortHeight) {
+    // See if we hit a breakpoint,
     var breakpoint = this.fetch_breakpoint(viewPortWidth);
 
-    var w, h;
-
     if (breakpoint === null) {
-      w = this.config.width;
-      h = this.config.height;
+      var w = this.config.width;
+      var h = this.config.height;
     } else {
-      w = breakpoint[1];
-      h = breakpoint[2];
+      var w = breakpoint[1];
+      var h = breakpoint[2];
     }
 
     // Account for margins in width and height
     var m = (this.config.contentMargin*2);
 
-    var divWidth = this.get_pixel_val(w, viewPortWidth, 'w', m);
-    var divHeight = this.get_pixel_val(h, viewPortHeight, 'h', m);
+    // Convert to pixels
+    var w = this.get_pixel_val(w, viewPortWidth, 'w', m);
+    var h = this.get_pixel_val(h, viewPortHeight, 'h', m);
+
+    return [w, h];
+  },
+
+  prepare_pan_and_zoom : function() {
+    // Get viewport width and height
+    var viewPortWidth = this.e.html.clientWidth;
+    var viewPortHeight = this.e.html.clientHeight;
+
+    // Get Panel width and height
+    var w_h = this.get_panel_width_and_height(viewPortWidth, viewPortHeight);
+    var panelW = w_h[0];
+    var panelH = w_h[1];
     
     // Set panel size
-    this.e.panel.style.minWidth = divWidth + 'px';
-    this.e.panel.style.minHeight = divHeight + 'px';
+    this.e.panel.style.minWidth = panelW + 'px';
+    this.e.panel.style.minHeight = panelH + 'px';
 
     // Set svg size
-    this.e.svg.style.minWidth = divWidth + 'px';
-    this.e.svg.style.minHeight = divHeight + 'px';
+    this.e.svg.style.minWidth = panelW + 'px';
+    this.e.svg.style.minHeight = panelH + 'px';
 
     // Set body minHeight for padding effect
-    document.body.style.minHeight = (divHeight + (this.config.paddingTopBot*2)) + 'px';
+    document.body.style.minHeight = (panelH + (this.config.paddingTopBot*2)) + 'px';
 
     // Get size of scaled background image
     var width_height_scale = this.calc_cover_size();
@@ -328,8 +336,8 @@ var frostedPanel = {
     var cropY = (imageHeight-viewPortHeight)/2;
 
     // Calculate how much we need to pan
-    var panW = (-(viewPortWidth-divWidth)/2) - cropX;
-    var panH = (-(viewPortHeight-divHeight)/2) - cropY;
+    var panW = (-(viewPortWidth-panelW)/2) - cropX;
+    var panH = (-(viewPortHeight-panelH)/2) - cropY;
 
     var scale = width_height_scale[2];
 
