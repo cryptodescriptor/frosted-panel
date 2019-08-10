@@ -66,7 +66,7 @@ All the content that you wish to be inside the panel, must be nested within the 
 ## Appending Content
 If you plan to append content to the panel programmatically, after you do so, you will need to call:
 
-    frostedPanel.pan()
+    frostedPanel.pan_and_zoom()
     
 To re-calculate the `width` and `height` if they are set to `auto`.
 
