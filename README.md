@@ -25,7 +25,7 @@ To get started, you will need to fork this repository or [download as zip](https
 
 ## Configuration
  
-Firstly, you will need to select the background-image you want to use. I recommend using a large image so that it covers the full height of the viewport on mobile devices. You can't use `background-size: cover` with Frosted Glass because we don't know how much the browser is zooming the image so we can't factor it into our calculations. The image we use in the demo is `2880x1620` pixels and it seems to display well on my Android device running Chrome, as well as my 1920x1080p monitor. For 4k monitor support I would suggest using an image with `4096x2149`pixels.
+Firstly, you will need to select the background-image you want to use. Frosted Panel now scales the image using `background-size: cover` as of BETA_v1.1, therefore the image size is no longer as relevant, we just recommend sizing to be at least `1920x1080` for optimal quality. You may wish to go even larger if you want it to look crisp on 4k monitors, but it will scale nonetheless.
 
 Now that you know what image you will be using, you must specify the path inside `index.html` on the attribute `bg-img` of the `image` element. Please also change the `width` and `height` attributes to match the dimensions of your image. If you are using an image of `2880x1620` pixels, the `width` should have a value of `2880` and the `height` should have a value of `1620`.
 
