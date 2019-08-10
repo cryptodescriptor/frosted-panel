@@ -283,7 +283,7 @@ var frostedPanel = {
     return [coverWidth, coverHeight, scale];
   },
 
-  prepare_pan : function() {
+  prepare_pan_and_zoom : function() {
     // Get viewport width and height
     var viewPortWidth = this.e.html.clientWidth;
     var viewPortHeight = this.e.html.clientHeight;
@@ -336,8 +336,8 @@ var frostedPanel = {
     return [panW, panH, scale];
   },
 
-  pan : function() {
-    var panW_panH_scale = this.prepare_pan();
+  pan_and_zoom : function() {
+    var panW_panH_scale = this.prepare_pan_and_zoom();
     var panW = panW_panH_scale[0];
     var panH = panW_panH_scale[1];
     var scale = panW_panH_scale[2];
@@ -387,11 +387,11 @@ var frostedPanel = {
 
     // Start Resize Listener
     window.addEventListener("resize", function() {
-      frostedPanel.pan();
+      frostedPanel.pan_and_zoom();
     });
 
-    // Do initial pan
-    this.pan();
+    // Do initial pan and zoom
+    this.pan_and_zoom();
 
     // Hide loading and display panel
     this.e.loading.style.display = 'none';
