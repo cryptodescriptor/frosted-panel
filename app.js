@@ -18,37 +18,7 @@ var frostedPanel = {
     loading : document.querySelector('.page-loading__icon')
   },
 
-  get imageWidth() {
-    return this.e.img.getAttribute('width');
-  },
-
-  get imageHeight() {
-    return this.e.img.getAttribute('height');
-  },
-
-  get paddingTopBot() {
-    return parseInt(
-      document.body.getAttribute('space-top-bot')
-    ) || 0;
-  },
-
-  get content_margin()  { 
-    return parseInt(
-      this.e.content.getAttribute('content-margin')
-    ) || 0;
-  },
-
-  get br_type() {
-    return this.e.panel.getAttribute('breakpoint-type') || 'min-width';
-  },
-
-  get max_width() {
-    return this.br_type.toLowerCase() === 'max-width';
-  },
-
   config : {
-    'width' : undefined,
-    'height' : undefined,
     'breakpoints' : []
   },
 
@@ -148,8 +118,27 @@ var frostedPanel = {
 
     // sort: ascending min-width, descending max-width
     this.config.breakpoints = this.config.breakpoints.sort(function(a, b) {
-      return (self.max_width === true) ? (b[0] - a[0]) : (a[0] - b[0]);
+      return (self.config.maxWidth === true) ? (b[0] - a[0]) : (a[0] - b[0]);
     });
+  },
+
+  load_attributes : function() {
+      var c = this.config;
+
+      c['imageWidth'] = this.e.img.getAttribute('width');
+      c['imageHeight'] = this.e.img.getAttribute('height');
+
+      c['paddingTopBot'] = parseInt(
+          document.body.getAttribute('space-top-bot')
+        ) || 0;
+
+      c['contentMargin'] = parseInt(
+          this.e.content.getAttribute('content-margin')
+        ) || 0;
+
+      c['brType'] = this.e.panel.getAttribute('breakpoint-type') || 'min-width';
+
+      c['maxWidth'] = this.config.brType.toLowerCase() === 'max-width';
   },
 
   load_config : function() {
@@ -181,6 +170,9 @@ var frostedPanel = {
     this.config['width'] = wh[0];
     this.config['height'] = wh[1];
 
+    // load the rest of the attributes
+    this.load_attributes();
+
     // load breakpoints
     this.load_breakpoints();
 
@@ -190,7 +182,7 @@ var frostedPanel = {
   is_suitable_breakpoint : function(breakpoint, viewPortWidth) {
     var condition;
 
-    if (this.max_width === true) {
+    if (this.config.maxWidth === true) {
       condition = viewPortWidth <= breakpoint[0];
     } else {
       condition = viewPortWidth >= breakpoint[0];
@@ -218,7 +210,7 @@ var frostedPanel = {
     if (this.config.breakpoints.length === 0) return null;
 
     // if we don't currently need a breakpoint
-    if (this.max_width === true) {
+    if (this.config.maxWidth === true) {
       if (viewPortWidth > this.config.breakpoints[0][0]) return null;
     } else {
       if (viewPortWidth < this.config.breakpoints[0][0]) return null;
@@ -264,16 +256,39 @@ var frostedPanel = {
     }
   },
 
+  calc_cover_size : function() {
+    // calculate the size of the scaled bg image
+    var width = this.config.imageWidth;
+    var height = this.config.imageHeight;
+
+    var object = document.body;
+
+    // Step 1 - Get the ratio of the div + the image
+    var imageRatio = width/height;
+    var coverRatio = object.offsetWidth/object.offsetHeight;
+
+    // Step 2 - Work out which ratio is greater
+    if (imageRatio >= coverRatio) {
+        // The Height is our constant
+        var coverHeight = object.offsetHeight;
+        var scale = (coverHeight / height);
+        var coverWidth = width * scale;
+    } else {
+        // The Width is our constant
+        var coverWidth = object.offsetWidth;
+        var scale = (coverWidth / width);
+        var coverHeight = height * scale;
+    }
+
+    return [coverWidth, coverHeight, scale];
+  },
+
   prepare_pan : function() {
-    // get viewport width and height
+    // Get viewport width and height
     var viewPortWidth = this.e.html.clientWidth;
     var viewPortHeight = this.e.html.clientHeight;
 
-    // Make svg behave like a background image
-    var cropX = (this.imageWidth-viewPortWidth)/2;
-    var cropY = (this.imageHeight-viewPortHeight)/2;
-
-    // see if we hit a breakpoint
+    // See if we hit a breakpoint
     var breakpoint = this.fetch_breakpoint(viewPortWidth);
 
     var w, h;
@@ -286,42 +301,47 @@ var frostedPanel = {
       h = breakpoint[2];
     }
 
-    // account for margins in width and height
-    var m = (this.content_margin*2);
+    // Account for margins in width and height
+    var m = (this.config.contentMargin*2);
 
     var divWidth = this.get_pixel_val(w, viewPortWidth, 'w', m);
     var divHeight = this.get_pixel_val(h, viewPortHeight, 'h', m);
     
-    // set panel size
+    // Set panel size
     this.e.panel.style.minWidth = divWidth + 'px';
     this.e.panel.style.minHeight = divHeight + 'px';
 
-    // set svg size
+    // Set svg size
     this.e.svg.style.minWidth = divWidth + 'px';
     this.e.svg.style.minHeight = divHeight + 'px';
 
-    // set body minHeight for padding effect
-    document.body.style.minHeight = (divHeight + (this.paddingTopBot*2)) + 'px';
+    // Set body minHeight for padding effect
+    document.body.style.minHeight = (divHeight + (this.config.paddingTopBot*2)) + 'px';
 
-    // calculate how much we need to pan
+    // Get size of scaled background image
+    var width_height_scale = this.calc_cover_size();
+    var imageWidth = width_height_scale[0];
+    var imageHeight = width_height_scale[1];
+
+    // Make svg behave like a centered background image
+    var cropX = (imageWidth-viewPortWidth)/2;
+    var cropY = (imageHeight-viewPortHeight)/2;
+
+    // Calculate how much we need to pan
     var panW = (-(viewPortWidth-divWidth)/2) - cropX;
     var panH = (-(viewPortHeight-divHeight)/2) - cropY;
 
-    return [panW, panH];
+    var scale = width_height_scale[2];
+
+    return [panW, panH, scale];
   },
 
   pan : function() {
-    var pan_pxs = this.prepare_pan();
-    var panW = pan_pxs[0];
-    var panH = pan_pxs[1];
-    this.e.img.setAttribute('transform', 'translate('+panW+' '+panH+')');
-  },
-
-  setViewportHeight : function() {
-    // fix for android devices to set vh while
-    // taking browser interface into account
-    var vh = window.innerHeight * 0.01;
-    document.body.style.setProperty('--vh', vh + 'px');
+    var panW_panH_scale = this.prepare_pan();
+    var panW = panW_panH_scale[0];
+    var panH = panW_panH_scale[1];
+    var scale = panW_panH_scale[2];
+    this.e.img.setAttribute('transform', 'translate('+panW+' '+panH+') scale('+scale+')');
   },
 
   started : false,
@@ -363,7 +383,7 @@ var frostedPanel = {
     img.style.WebkitFilter = 'url(#blurMe)';
 
     // Set content margin
-    this.e.content.style.margin = frostedPanel.content_margin + 'px';
+    this.e.content.style.margin = frostedPanel.config.contentMargin + 'px';
 
     // Start Resize Listener
     window.addEventListener("resize", function() {
