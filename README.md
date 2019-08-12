@@ -27,9 +27,9 @@ To get started, you will need to fork this repository or [download as zip](https
  
 Firstly, you will need to select the background-image you want to use. Frosted Panel now scales the image using `background-size: cover` as of BETA_v1.1, therefore the image size is no longer as relevant, we just recommend sizing to be at least `1920x1080` for optimal quality. You may wish to go even larger if you want it to look crisp on 4k monitors, but it will scale nonetheless.
 
-Now that you know what image you will be using, you must specify the path inside `index.html` on the attribute `bg-img` of the `image` element. Please also change the `width` and `height` attributes to match the dimensions of your image. If you are using an image of `2880x1620` pixels, the `width` should have a value of `2880` and the `height` should have a value of `1620`.
+Now that you know what image you will be using, you must specify the path inside `index.html` on the attribute `xlink:href` of the `image` element. Please also change the `width` and `height` attributes to match the dimensions of your image. If you are using an image of `2880x1620` pixels, the `width` should have a value of `2880` and the `height` should have a value of `1620`.
 
-    <image bg-img="./img/bg.jpg" x="0" y="0" width="2880" height="1620" />
+    <image xlink-href="./img/bg.jpg" x="0" y="0" width="2880" height="1620" />
 
 ## Attributes
 
