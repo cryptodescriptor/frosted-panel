@@ -2,7 +2,6 @@ body {
 	padding: 0;
 	margin: 0;
 	height: 100vh; /* fallback */
-	height: calc(var(--vh, 1vh) * 100);
 	background-position: center;
 	background-repeat: no-repeat;
 	background-attachment: local;
