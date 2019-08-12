@@ -381,8 +381,6 @@ var frostedPanel = {
     // Set background image
     document.body.style.backgroundImage = 'url(' + bg + ')';
 
-    var img = this.e.img;
-
     // Set content margin
     this.e.content.style.margin = frostedPanel.config.contentMargin + 'px';
 
