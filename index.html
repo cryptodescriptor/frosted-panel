@@ -47,12 +47,10 @@
 	
 	<script type="text/javascript">
 		// fix for vh on android and safari mobile
-		var vh = window.innerHeight * 0.01;
-		document.body.style.height = (vh * 100) + 'px';
+		document.body.style.height = window.innerHeight + 'px';
 
 		window.addEventListener("resize", function() {
-			var vh = window.innerHeight * 0.01;
-			document.body.style.height = (vh * 100) + 'px';
+			document.body.style.height = window.innerHeight + 'px';
 		});
 	</script>
 	
