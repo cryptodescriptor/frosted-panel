@@ -357,7 +357,7 @@ var frostedPanel = {
 
   ready : function(callback) {
     // Check the background image is loaded before starting frostedPanel
-    var src = this.e.img.getAttribute('bg-img');
+    var src = this.e.img.getAttribute('xlink:href');
 
     this.bg_img = src;
     
@@ -382,13 +382,6 @@ var frostedPanel = {
     document.body.style.backgroundImage = 'url(' + bg + ')';
 
     var img = this.e.img;
-
-    // Set svg image href
-    img.setAttribute('href', bg);
-
-    // Apply blur filter
-    img.style.filter = 'url(#blurMe)';
-    img.style.WebkitFilter = 'url(#blurMe)';
 
     // Set content margin
     this.e.content.style.margin = frostedPanel.config.contentMargin + 'px';
