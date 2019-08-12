@@ -15,6 +15,7 @@ Browsers tested thus far:
 - Edge
 - Internet Explorer
 - Safari 12 (others might work)
+- Opera
 
 Although only a few browsers are listed above, it should work on the majority of them, including Safari and Opera Mini etc.. (Currently untested so do not take my word for it).
 
