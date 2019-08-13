@@ -395,9 +395,6 @@ var frostedPanel = {
     // Hide loading and display panel
     this.e.loading.style.display = 'none';
     this.e.panel.style.visibility = 'visible';
-    
-    // Resize body to fit viewport
-		document.body.style.height = window.innerHeight + 'px';
   }
 }
 
