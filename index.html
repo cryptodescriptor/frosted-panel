@@ -46,12 +46,17 @@
 	</div>
 	
 	<script type="text/javascript">
-		// fix for vh on android and safari mobile
-		document.body.style.height = window.innerHeight + 'px';
-
-		window.addEventListener("resize", function() {
+		// Fix for vh on android and safari mobile
+		var is_firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+		
+		// Firefox mobile viewport bugs out, avoid this
+		if (!is_firefox) {
 			document.body.style.height = window.innerHeight + 'px';
-		});
+
+			window.addEventListener("resize", function() {
+				document.body.style.height = window.innerHeight + 'px';
+			});
+		}
 	</script>
 	
 	<script src="./app.js"></script>
