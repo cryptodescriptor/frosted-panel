@@ -12,6 +12,7 @@ Browsers tested thus far:
 
 - Chrome
 - Firefox
+- Firefox Focus
 - Edge
 - Internet Explorer
 - Safari
