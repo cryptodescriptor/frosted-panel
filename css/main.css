@@ -1,11 +1,18 @@
 html {
 	height: 100%;
+	/* Need Flex to force Panel overflow */
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-flex: 1;
 	-ms-flex: 1 0 auto;
 	flex: 1 0 auto;
+	-webkit-box-align: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
 }
 
 body {
