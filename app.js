@@ -252,7 +252,7 @@ var frostedPanel = {
       return px;
     } else if (val.toLowerCase() === 'auto') {
       this.toggle_auto(true, type, margin);
-      return ((type === 'w') ? (this.e.content.clientWidth) : this.e.content.clientHeight)+margin;
+      return ((type === 'w') ? this.e.content.clientWidth : this.e.content.clientHeight)+margin;
     }
   },
 
