@@ -76,7 +76,7 @@ To re-calculate the `width` and `height` if they are set to `auto`.
 
 ## Panel Margin
 
-On the `body` tag, you can add an optional attribute `space-top-bot`, which works by setting `min-height` on the body to a value of `panel_height + (space-top-bot*2)`, every time the screen is resized. This allows us to emulate a top and bottom `margin` for our panel. Currently there is no way to set a left and right margin, I didn't add this feature because generally you will be using percentage width's for your panel anyway.
+On the `body` tag, you can add an optional attribute `space-top-bot`, which works by setting `min-height` of the page to a value of `panel_height + (space-top-bot*2)`, every time the screen is resized. This allows us to emulate a top and bottom `margin` for our panel. Currently there is no way to set a left and right margin, I didn't add this feature because generally you will be using percentage width's for your panel anyway.
 
 If you do use fixed width's, make sure the panel `width` is small enough to fit on the viewport's of your website visitors, otherwise the panel will overflow the body.
 
