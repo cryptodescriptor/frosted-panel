@@ -1,7 +1,12 @@
+html {
+	height: 100%;
+	display: flex;
+}
+
 body {
 	padding: 0;
 	margin: 0;
-	height: 100vh; /* fallback */
+	height: 100%;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-attachment: local;
