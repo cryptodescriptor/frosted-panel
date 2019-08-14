@@ -323,8 +323,8 @@ var frostedPanel = {
     this.e.svg.style.minWidth = panelW + 'px';
     this.e.svg.style.minHeight = panelH + 'px';
 
-    // Set body minHeight for padding effect
-    document.body.style.minHeight = (panelH + (this.config.paddingTopBot*2)) + 'px';
+    // Set html minHeight for padding effect
+    this.e.html.style.minHeight = (panelH + (this.config.paddingTopBot*2)) + 'px';
 
     // Get size of scaled background image
     var width_height_scale = this.calc_cover_size();
