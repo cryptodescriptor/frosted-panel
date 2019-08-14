@@ -304,11 +304,29 @@ var frostedPanel = {
 
     return [w, h];
   },
-
+  
+  previous_viewport_w : null,
+  previous_viewport_h : null,
+  
+  viewport_size_not_changed : function(viewPortWidth, viewPortHeight) {
+    return (
+        this.previous_viewport_w === viewPortWidth &&
+        this.previous_viewport_h === viewPortHeight
+      );
+  },
+  
   prepare_pan_and_zoom : function() {
     // Get viewport width and height
     var viewPortWidth = this.e.html.clientWidth;
     var viewPortHeight = this.e.html.clientHeight;
+    
+    // Don't need to do anything if viewport size didn't change
+    if (this.viewport_size_not_changed(viewPortWidth, viewPortHeight)) {
+      return null;
+    }
+
+    this.previous_viewport_w = viewPortWidth;
+    this.previous_viewport_h = viewPortWidth;
 
     // Get Panel width and height
     var w_h = this.get_panel_width_and_height(viewPortWidth, viewPortHeight);
@@ -346,6 +364,7 @@ var frostedPanel = {
 
   pan_and_zoom : function() {
     var panW_panH_scale = this.prepare_pan_and_zoom();
+    if (panW_panH_scale === null) return;
     var panW = panW_panH_scale[0];
     var panH = panW_panH_scale[1];
     var scale = panW_panH_scale[2];
