@@ -1,4 +1,4 @@
-# Frosted Panel [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Frosted%20Glass%2FPanel%20Effect%2C%20Cross%20Browser%2C%20Vanilla%20JS%20%2B%20CSS%21&url=https://github.com/cryptodescriptor/frosted-panel&hashtags=css,javascript,design,frostedglass,frostedpanel,effect)
+# Frosted Panel &nbsp; [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Frosted%20Glass%2FPanel%20Effect%2C%20Cross%20Browser%2C%20Vanilla%20JS%20%2B%20CSS%21&url=https://github.com/cryptodescriptor/frosted-panel&hashtags=css,javascript,design,frostedglass,frostedpanel,effect)
 
 Frosted Panel  is a cross-browser compatible library written in pure Javascript to achieve a responsive "Frosted Glass" effect.
 
