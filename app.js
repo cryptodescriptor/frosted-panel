@@ -8,6 +8,8 @@ if (!String.prototype.endsWith) {
   };
 }
 
+/* Frosted Panel - sourced from https://github.com/cryptodescriptor/frosted-panel */
+
 var frostedPanel = {
   e : {
     img : document.querySelector('image'),
