@@ -18,7 +18,7 @@ Browsers tested thus far:
 - Safari
 - Opera
 
-Although only a few browsers are listed above, it should work on the majority of them.
+Although only a few browsers are listed above, it should work on the majority of them. The goal of this library is cross-compatibility.
 
 
 ## Getting Started
