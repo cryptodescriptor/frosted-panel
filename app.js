@@ -226,7 +226,7 @@ var frostedPanel = {
     'h' : null
   },
 
-  toggle_auto : function(on, type, margin, viewPortWidthOrHeightPx) {
+  toggle_auto : function(on, type, margin, contentWidthOrHeightPx) {
     // Toggles content div width/height between fixed and auto when appropriate
     // in order to be able to effectively calculate actual content 
     // width and preserve content margins
@@ -237,7 +237,7 @@ var frostedPanel = {
       this.auto[type] = true;
     // Set content width/height to fixed before panel width/height is "fixed"
     } else {
-      var contentWidthOrHeight = viewPortWidthOrHeightPx - margin;
+      var contentWidthOrHeight = contentWidthOrHeightPx - margin;
       this.e.content.style[(type === 'w') ? 'width' : 'height'] = contentWidthOrHeight + 'px';
       this.auto[type] = false;
     }
