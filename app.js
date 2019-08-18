@@ -319,8 +319,8 @@ var frostedPanel = {
 
   prepare_pan_and_zoom : function() {
     // Get viewport width and height
-    var viewPortWidth = this.e.html.clientWidth;
-    var viewPortHeight = this.e.html.clientHeight;
+    var viewPortWidth = window.innerWidth;
+    var viewPortHeight = window.innerHeight;
     
     // Don't need to do anything if viewport size didn't change
     if (this.viewport_size_not_changed(viewPortWidth, viewPortHeight)) {
