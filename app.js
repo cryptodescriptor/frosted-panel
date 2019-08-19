@@ -323,7 +323,7 @@ var frostedPanel = {
 
   get_device_width_and_height : function() {
     // Mobile versions of Chrome have a problem with innerWidth after rotation.
-    // Use clientWidth + clientHeight instead if were on a mobile device.
+    // Use clientWidth + clientHeight instead.
     var viewportWidth = document.documentElement.clientWidth;
     var viewportHeight = document.documentElement.clientHeight;
 
