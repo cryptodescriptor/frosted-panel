@@ -226,7 +226,7 @@ var frostedPanel = {
     'h' : null
   },
 
-  toggle_auto : function(on, type, margin, contentWidthOrHeightPx) {
+  toggle_auto : function(on, type, margin, panelWidthOrHeightPx) {
     // Toggles content div width/height between fixed and auto when appropriate
     // in order to be able to effectively calculate actual content 
     // width and preserve content margins
@@ -237,8 +237,8 @@ var frostedPanel = {
       this.auto[type] = true;
     // Set content width/height to fixed before panel width/height is "fixed"
     } else {
-      var contentWidthOrHeight = contentWidthOrHeightPx - margin;
-      this.e.content.style[(type === 'w') ? 'width' : 'height'] = contentWidthOrHeight + 'px';
+      var contentWidthOrHeightPx = panelWidthOrHeightPx - margin;
+      this.e.content.style[(type === 'w') ? 'width' : 'height'] = contentWidthOrHeightPx + 'px';
       this.auto[type] = false;
     }
   },
