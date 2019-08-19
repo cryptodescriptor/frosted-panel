@@ -321,7 +321,7 @@ var frostedPanel = {
     return (typeof window.orientation !== 'undefined') || (navigator.userAgent.indexOf('IEMobile') !== -1);
   },
 
-  get_device_width_height : function() {
+  get_device_width_and_height : function() {
     // Android chrome has a problem with innerWidth after rotation.
     // Use clientWidth + clientHeight instead if were on a mobile device.
     var viewportWidth = document.documentElement.clientWidth;
@@ -341,7 +341,7 @@ var frostedPanel = {
 
   prepare_pan_and_zoom : function() {
     // Get viewport width and height
-    var viewPortWH = this.get_device_width_height();
+    var viewPortWH = this.get_device_width_and_height();
     var viewportWidth = viewPortWH[0];
     var viewportHeight = viewPortWH[1];
     
