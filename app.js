@@ -101,8 +101,8 @@ var frostedPanel = {
     // if attribute missing, return
     if (!panel_breakpoints) return;
 
+    // parse and validate breakpoints
     var breakpoints = panel_breakpoints.split(',');
-
     var breakpoint;
 
     for (var i = 0; i < breakpoints.length; i++) {
@@ -181,24 +181,24 @@ var frostedPanel = {
     return true;
   },
 
-  is_suitable_breakpoint : function(breakpoint, viewPortWidth) {
+  is_suitable_breakpoint : function(breakpoint, viewportWidth) {
     var condition;
 
     if (this.config.maxWidth === true) {
-      condition = viewPortWidth <= breakpoint[0];
+      condition = viewportWidth <= breakpoint[0];
     } else {
-      condition = viewPortWidth >= breakpoint[0];
+      condition = viewportWidth >= breakpoint[0];
     }
 
     return (condition === true) ? true : false;
   },
 
-  find_suitable_breakpoint : function(viewPortWidth) {
+  find_suitable_breakpoint : function(viewportWidth) {
     var current, breakpoint = null;
 
     for (var i = 0; i < this.config.breakpoints.length; i++) {
       current = this.config.breakpoints[i];
-      if (this.is_suitable_breakpoint(current, viewPortWidth)) {
+      if (this.is_suitable_breakpoint(current, viewportWidth)) {
         breakpoint = current;
         continue;
       }
@@ -207,18 +207,18 @@ var frostedPanel = {
     return breakpoint;
   },
 
-  fetch_breakpoint : function(viewPortWidth) {
+  fetch_breakpoint : function(viewportWidth) {
     // if breakpoints are empty
     if (this.config.breakpoints.length === 0) return null;
 
     // if we don't currently need a breakpoint
     if (this.config.maxWidth === true) {
-      if (viewPortWidth > this.config.breakpoints[0][0]) return null;
+      if (viewportWidth > this.config.breakpoints[0][0]) return null;
     } else {
-      if (viewPortWidth < this.config.breakpoints[0][0]) return null;
+      if (viewportWidth < this.config.breakpoints[0][0]) return null;
     }
 
-    return this.find_suitable_breakpoint(viewPortWidth);
+    return this.find_suitable_breakpoint(viewportWidth);
   },
 
   auto : {
@@ -243,9 +243,9 @@ var frostedPanel = {
     }
   },
 
-  get_pixel_val : function(val, viewPortWidthOrHeight, type, margin) {
+  get_pixel_val : function(val, viewportWidthOrHeight, type, margin) {
     if (val.endsWith('%')) {
-      var px = (viewPortWidthOrHeight/100)*val.replace('%', '');
+      var px = (viewportWidthOrHeight/100)*val.replace('%', '');
       this.toggle_auto(false, type, margin, px);
       return px;
     } else if (val.endsWith('px')) {
@@ -285,9 +285,9 @@ var frostedPanel = {
     return [coverWidth, coverHeight, scale];
   },
 
-  get_panel_width_and_height : function(viewPortWidth, viewPortHeight) {
-    // See if we hit a breakpoint,
-    var breakpoint = this.fetch_breakpoint(viewPortWidth);
+  get_panel_width_and_height : function(viewportWidth, viewportHeight) {
+    // See if we hit a breakpoint
+    var breakpoint = this.fetch_breakpoint(viewportWidth);
 
     if (breakpoint === null) {
       var w = this.config.width;
@@ -301,8 +301,8 @@ var frostedPanel = {
     var m = (this.config.contentMargin*2);
 
     // Convert to pixels
-    var w = this.get_pixel_val(w, viewPortWidth, 'w', m);
-    var h = this.get_pixel_val(h, viewPortHeight, 'h', m);
+    var w = this.get_pixel_val(w, viewportWidth, 'w', m);
+    var h = this.get_pixel_val(h, viewportHeight, 'h', m);
 
     return [w, h];
   },
@@ -310,28 +310,51 @@ var frostedPanel = {
   previous_viewport_w : null,
   previous_viewport_h : null,
 
-  viewport_size_not_changed : function(viewPortWidth, viewPortHeight) {
+  viewport_size_not_changed : function(viewportWidth, viewportHeight) {
     return (
-        this.previous_viewport_w === viewPortWidth &&
-        this.previous_viewport_h === viewPortHeight
+        this.previous_viewport_w === viewportWidth &&
+        this.previous_viewport_h === viewportHeight
       );
+  },
+
+  is_mobile : function() {
+    return (typeof window.orientation !== 'undefined') || (navigator.userAgent.indexOf('IEMobile') !== -1);
+  },
+
+  get_device_width_height : function() {
+    // Android chrome has a problem with innerWidth after rotation.
+    // Use clientWidth + clientHeight instead if were on a mobile device.
+    var viewportWidth = document.documentElement.clientWidth;
+    var viewportHeight = document.documentElement.clientHeight;
+
+    if (!this.is_mobile()) {
+      var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    } else {
+      var scrollbarWidth = 0;
+    }
+
+    // If scrollbar is visible
+    viewportWidth = (scrollbarWidth > 0) ? (viewportWidth+scrollbarWidth) : viewportWidth;
+
+    return [viewportWidth, viewportHeight];
   },
 
   prepare_pan_and_zoom : function() {
     // Get viewport width and height
-    var viewPortWidth = this.e.html.clientWidth;
-    var viewPortHeight = this.e.html.clientHeight;
+    var viewPortWH = this.get_device_width_height();
+    var viewportWidth = viewPortWH[0];
+    var viewportHeight = viewPortWH[1];
     
     // Don't need to do anything if viewport size didn't change
-    if (this.viewport_size_not_changed(viewPortWidth, viewPortHeight)) {
+    if (this.viewport_size_not_changed(viewportWidth, viewportHeight)) {
       return null;
     }
 
-    this.previous_viewport_w = viewPortWidth;
-    this.previous_viewport_h = viewPortWidth;
+    this.previous_viewport_w = viewportWidth;
+    this.previous_viewport_h = viewportWidth;
 
     // Get Panel width and height
-    var w_h = this.get_panel_width_and_height(viewPortWidth, viewPortHeight);
+    var w_h = this.get_panel_width_and_height(viewportWidth, viewportHeight);
     var panelW = w_h[0];
     var panelH = w_h[1];
     
@@ -352,12 +375,12 @@ var frostedPanel = {
     var imageHeight = width_height_scale[1];
 
     // Make svg behave like a centered background image
-    var cropX = (imageWidth-viewPortWidth)/2;
-    var cropY = (imageHeight-viewPortHeight)/2;
+    var cropX = (imageWidth-viewportWidth)/2;
+    var cropY = (imageHeight-viewportHeight)/2;
 
     // Calculate how much we need to pan
-    var panW = (-(viewPortWidth-panelW)/2) - cropX;
-    var panH = (-(viewPortHeight-panelH)/2) - cropY;
+    var panW = (-(viewportWidth-panelW)/2) - cropX;
+    var panH = (-(viewportHeight-panelH)/2) - cropY;
 
     var scale = width_height_scale[2];
 
