@@ -226,35 +226,32 @@ var frostedPanel = {
     'h' : null
   },
 
-  toggle_auto : function(on, type, margin, panelWidthOrHeightPx) {
-    // Toggles content div width/height between fixed and auto when appropriate
-    // in order to be able to effectively calculate actual content 
-    // width and preserve content margins
-    var a = this.auto[type];
-    // Set content width/height to auto before panel width/height is auto
-    if (a === null && on === true || a === false && on === true) {
-      this.e.content.style[(type === 'w') ? 'width' : 'height'] = 'auto';
+  toggle_auto : function(on, type, panelWidthOrHeightPx) {
+    var w_or_h = (type === 'w') ? 'width' : 'height';
+    if ((on === true) && (this.auto[type] === false || this.auto[type] === null)) {
+      this.e.content.style[w_or_h] = 'auto';
+      this.e.panel.style[w_or_h] = 'auto';
       this.auto[type] = true;
-    // Set content width/height to fixed before panel width/height is "fixed"
-    } else {
-      var contentWidthOrHeightPx = panelWidthOrHeightPx - margin;
-      this.e.content.style[(type === 'w') ? 'width' : 'height'] = contentWidthOrHeightPx + 'px';
+    } else if (on === false) {
+      this.e.content.style[w_or_h] = panelWidthOrHeightPx - (this.config.contentMargin*2) + 'px';
+      this.e.panel.style[w_or_h] = panelWidthOrHeightPx + 'px';
       this.auto[type] = false;
     }
   },
 
-  get_pixel_val : function(val, viewportWidthOrHeight, type, margin) {
+  set_pixel_val : function(val, viewportWidthOrHeight, type) {
     if (val.endsWith('%')) {
       var px = (viewportWidthOrHeight/100)*val.replace('%', '');
-      this.toggle_auto(false, type, margin, px);
+      this.toggle_auto(false, type, px);
       return px;
     } else if (val.endsWith('px')) {
       var px = parseInt(val.replace('px', ''));
-      this.toggle_auto(false, type, margin, px);
+      this.toggle_auto(false, type, px);
       return px;
     } else if (val.toLowerCase() === 'auto') {
-      this.toggle_auto(true, type, margin);
-      return ((type === 'w') ? this.e.content.clientWidth : this.e.content.clientHeight)+margin;
+      var m = (this.config.contentMargin*2);
+      this.toggle_auto(true, type);
+      return ((type === 'w') ? (this.e.content.clientWidth+m) : (this.e.content.clientHeight+m));
     }
   },
 
@@ -285,7 +282,7 @@ var frostedPanel = {
     return [coverWidth, coverHeight, scale];
   },
 
-  get_panel_width_and_height : function(viewportWidth, viewportHeight) {
+  set_panel_width_and_height : function(viewportWidth, viewportHeight) {
     // See if we hit a breakpoint
     var breakpoint = this.fetch_breakpoint(viewportWidth);
 
@@ -297,13 +294,11 @@ var frostedPanel = {
       var h = breakpoint[2];
     }
 
-    // Account for margins in width and height
-    var m = (this.config.contentMargin*2);
+    // Convert to pixels and set width + height
+    var w = this.set_pixel_val(w, viewportWidth, 'w');
+    var h = this.set_pixel_val(h, viewportHeight, 'h');
 
-    // Convert to pixels
-    var w = this.get_pixel_val(w, viewportWidth, 'w', m);
-    var h = this.get_pixel_val(h, viewportHeight, 'h', m);
-
+    // Return w,h so we can calc pan + zoom values
     return [w, h];
   },
   
@@ -353,18 +348,10 @@ var frostedPanel = {
     this.previous_viewport_w = viewportWidth;
     this.previous_viewport_h = viewportWidth;
 
-    // Get Panel width and height
-    var w_h = this.get_panel_width_and_height(viewportWidth, viewportHeight);
-    var panelW = w_h[0];
-    var panelH = w_h[1];
-    
-    // Set panel size
-    this.e.panel.style.minWidth = panelW + 'px';
-    this.e.panel.style.minHeight = panelH + 'px';
-
-    // Set svg size
-    this.e.svg.style.minWidth = panelW + 'px';
-    this.e.svg.style.minHeight = panelH + 'px';
+    // Set Panel width and height
+    var wh = this.set_panel_width_and_height(viewportWidth, viewportHeight);
+    var panelW = wh[0];
+    var panelH = wh[1];
 
     // Set html minHeight for padding effect
     this.e.html.style.minHeight = (panelH + (this.config.paddingTopBot*2)) + 'px';
