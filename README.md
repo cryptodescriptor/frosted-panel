@@ -73,6 +73,7 @@ If you plan to append content to the panel programmatically, after you do so, yo
     
 To re-calculate the `width` and `height` if they are set to `auto`.
 
+** As of BETA_v2.1 this should no longer be necessary! **
 
 ## Panel Margin
 
