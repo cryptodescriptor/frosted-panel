@@ -181,24 +181,17 @@ var frostedPanel = {
     return true;
   },
 
-  is_suitable_breakpoint : function(breakpoint, viewportWidth) {
-    var condition;
-
-    if (this.config.maxWidth === true) {
-      condition = viewportWidth <= breakpoint[0];
-    } else {
-      condition = viewportWidth >= breakpoint[0];
-    }
-
-    return (condition === true) ? true : false;
+  is_suitable_breakpoint : function(breakpoint) {
+    var string = (this.config.maxWidth === true) ? 'max-width' : 'min-width';
+    return window.matchMedia('('+string+': '+breakpoint[0]+'px)').matches;
   },
 
-  find_suitable_breakpoint : function(viewportWidth) {
+  find_suitable_breakpoint : function() {
     var current, breakpoint = null;
 
     for (var i = 0; i < this.config.breakpoints.length; i++) {
       current = this.config.breakpoints[i];
-      if (this.is_suitable_breakpoint(current, viewportWidth)) {
+      if (this.is_suitable_breakpoint(current)) {
         breakpoint = current;
         continue;
       }
@@ -207,18 +200,16 @@ var frostedPanel = {
     return breakpoint;
   },
 
-  fetch_breakpoint : function(viewportWidth) {
+  fetch_breakpoint : function() {
     // if breakpoints are empty
     if (this.config.breakpoints.length === 0) return null;
 
     // if we don't currently need a breakpoint
-    if (this.config.maxWidth === true) {
-      if (viewportWidth > this.config.breakpoints[0][0]) return null;
-    } else {
-      if (viewportWidth < this.config.breakpoints[0][0]) return null;
+    if (!this.is_suitable_breakpoint(this.config.breakpoints[0])) {
+      return null;
     }
 
-    return this.find_suitable_breakpoint(viewportWidth);
+    return this.find_suitable_breakpoint();
   },
 
   auto : {
@@ -284,7 +275,7 @@ var frostedPanel = {
 
   set_panel_width_and_height : function(viewportWidth, viewportHeight) {
     // See if we hit a breakpoint
-    var breakpoint = this.fetch_breakpoint(viewportWidth);
+    var breakpoint = this.fetch_breakpoint();
 
     if (breakpoint === null) {
       var w = this.config.width;
