@@ -302,25 +302,11 @@ var frostedPanel = {
       );
   },
 
-  is_mobile : function() {
-    return (typeof window.orientation !== 'undefined') || (navigator.userAgent.indexOf('IEMobile') !== -1);
-  },
-
   get_device_width_and_height : function() {
-    // Mobile versions of Chrome have a problem with innerWidth after rotation.
-    // Use clientWidth + clientHeight instead.
-    var viewportWidth = document.documentElement.clientWidth;
-    var viewportHeight = document.documentElement.clientHeight;
-
-    if (!this.is_mobile()) {
-      var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    } else {
-      var scrollbarWidth = 0;
-    }
-
-    viewportWidth = viewportWidth+scrollbarWidth;
-
-    return [viewportWidth, viewportHeight];
+    return [
+      (window.innerWidth) ? window.innerWidth : document.documentElement.clientWidth,
+      (window.innerHeight) ? window.innerHeight : document.documentElement.clientHeight
+    ];
   },
 
   prepare_pan_and_zoom : function() {
@@ -394,16 +380,8 @@ var frostedPanel = {
 
     if (img.complete) img.onload();
   },
-
-  init : function() {
-    var bg = this.bg_img;
-
-    // Set background image
-    document.body.style.backgroundImage = 'url(' + bg + ')';
-
-    // Set content margin
-    this.e.content.style.margin = frostedPanel.config.contentMargin + 'px';
-
+  
+  start_panel : function() {
     // Start Resize Listener
     window.addEventListener("resize", function() {
       frostedPanel.pan_and_zoom();
@@ -415,6 +393,22 @@ var frostedPanel = {
     // Hide loading and display panel
     window.parent.postMessage('hideLoad', '*');
     this.e.panel.style.visibility = 'visible';
+  },
+
+  init : function() {
+    var bg = this.bg_img;
+
+    // Set background image
+    document.body.style.backgroundImage = 'url(' + bg + ')';
+
+    // Set content margin
+    this.e.content.style.margin = frostedPanel.config.contentMargin + 'px';
+
+    var self = this;
+
+    window.onload =  function() {
+      self.start_panel.call(self);
+    };
   }
 }
 
