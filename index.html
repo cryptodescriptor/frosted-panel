@@ -4,6 +4,7 @@
 	<title>Frosted Panel Demo</title>
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="./css/loading.css">
 
 	<style type="text/css">
 		#doc-wrapper {
@@ -19,6 +20,20 @@
 	</style>
 </head>
 <body>
-	 <iframe id="doc-wrapper" src="./app.html"></iframe> 
+	<div id="loading">
+		<div class="page-loading__icon"></div>
+	</div>
+
+	<script type="text/javascript">
+		var loading = document.querySelector('#loading');
+
+		window.addEventListener('message', function(event) {
+			if (event.data === 'hideLoad') {
+				loading.style.display = 'none';
+			}
+		}, false);
+	</script>
+
+	<iframe id="doc-wrapper" src="./app.html"></iframe>
 </body>
 </html>
