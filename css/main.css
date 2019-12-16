@@ -53,6 +53,7 @@ svg {
 }
 
 .content {
+	position: relative;
 	z-index: 1;
 	overflow: hidden;
 }
