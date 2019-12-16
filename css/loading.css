@@ -40,7 +40,6 @@ html, body {
 }
 
 .page-loading__icon {
-  z-index: 1;
   overflow : hidden;
   width : 29px;
   height : 29px;
