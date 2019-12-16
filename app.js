@@ -16,8 +16,7 @@ var frostedPanel = {
     svg : document.querySelector('svg'),
     panel : document.querySelector('.frosted-panel'),
     content : document.querySelector('.content'),
-    html : document.documentElement,
-    loading : document.querySelector('.page-loading__icon')
+    html : document.documentElement
   },
 
   config : {
@@ -414,7 +413,7 @@ var frostedPanel = {
     this.pan_and_zoom();
 
     // Hide loading and display panel
-    this.e.loading.style.display = 'none';
+    window.parent.postMessage('hideLoad', '*');
     this.e.panel.style.visibility = 'visible';
   }
 }
