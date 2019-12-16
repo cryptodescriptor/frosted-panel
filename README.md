@@ -76,6 +76,13 @@ If you plan to append content to the panel programmatically, after you do so, yo
     
 To re-calculate the `width` and `height` if they are set to `auto`.
 
+## Preventing Unnecessary Re-paints
+
+On some mobile browsers (chrome for example) if the page is scrolled, the browser interface changes size and consequently the page height changes too, triggering a re-paint of the panel. This can cause sluggish behaviour when interacting with form elements immediately after scrolling. To prevent this behavior, you will need to wrap your document in an IFRAME.
+
+Example:
+https://github.com/cryptodescriptor/survey-form-iframe/blob/master/index.html
+
 ## Panel Margin
 
 On the `body` tag, you can add an optional attribute `space-top-bot`, which works by setting `min-height` of the page to a value of `panel_height + (space-top-bot*2)`, every time the screen is resized. This allows us to emulate a top and bottom `margin` for our panel. Currently there is no way to set a left and right margin, I didn't add this feature because generally you will be using percentage width's for your panel anyway.
