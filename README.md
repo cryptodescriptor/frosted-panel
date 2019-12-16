@@ -76,9 +76,9 @@ If you plan to append content to the panel programmatically, after you do so, yo
     
 To re-calculate the `width` and `height` if they are set to `auto`.
 
-## Preventing Unnecessary Re-paints
+## Preventing Unnecessary Repaints
 
-On some mobile browsers (chrome for example) if the page is scrolled, the browser interface changes size and consequently the page height changes too, triggering a re-paint of the panel. This can cause sluggish behaviour when interacting with form elements immediately after scrolling. To prevent this behavior, you will need to wrap your document in an IFRAME.
+On some mobile browsers (chrome for example) if the page is scrolled, the browser interface changes size and consequently the page height changes too, triggering a repaint of the panel. This can cause sluggish behaviour when interacting with form elements immediately after scrolling. To prevent this behavior, you will need to wrap your document in an IFRAME.
 
 Example:
 https://github.com/cryptodescriptor/survey-form-iframe/blob/master/index.html
