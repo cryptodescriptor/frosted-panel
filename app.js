@@ -302,7 +302,24 @@ var frostedPanel = {
       );
   },
 
+  is_mobile : function() {
+    return (typeof window.orientation !== 'undefined') || (navigator.userAgent.indexOf('IEMobile') !== -1);
+  },
+
   get_device_width_and_height : function() {
+    // Mobile versions of Chrome have a problem with innerWidth after rotation.
+    // Use clientWidth + clientHeight instead.
+    var viewportWidth = document.documentElement.clientWidth;
+    var viewportHeight = document.documentElement.clientHeight;
+
+    if (!this.is_mobile()) {
+      var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    } else {
+      var scrollbarWidth = 0;
+    }
+
+    viewportWidth = viewportWidth+scrollbarWidth;
+
     return [window.innerWidth, window.innerHeight];
   },
 
