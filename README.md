@@ -34,6 +34,17 @@ Now that you know what image you will be using, you must specify the path inside
 
     <image xlink:href="./img/bg.jpg" x="0" y="0" width="2880" height="1620" />
 
+
+## Preventing Unnecessary Repaints
+
+**This is an extremely important step if your panel will need to be scrolled on some mobile resolutions.**
+
+On some mobile browsers (Chrome for example) if the page is scrolled, the browser interface changes size and consequently the page height changes too, triggering a repaint of the panel. This can cause sluggish behaviour and graphical flickers. To prevent this from happening, you will need to wrap the document in an IFRAME.
+
+Example:
+https://github.com/cryptodescriptor/survey-form-iframe/blob/master/index.html
+
+
 ## Attributes
 
 Now you have your background-image all set up, you need to configure the panel size, its margins, and optionally add some breakpoints to allow you to change the sizing on different viewports.
@@ -75,13 +86,6 @@ If you plan to append content to the panel programmatically, after you do so, yo
     frostedPanel.pan_and_zoom()
     
 To re-calculate the `width` and `height` if they are set to `auto`.
-
-## Preventing Unnecessary Repaints
-
-On some mobile browsers (chrome for example) if the page is scrolled, the browser interface changes size and consequently the page height changes too, triggering a repaint of the panel. This can cause sluggish behaviour and graphical flickers. To prevent this from happening, you will need to wrap your document in an IFRAME.
-
-Example:
-https://github.com/cryptodescriptor/survey-form-iframe/blob/master/index.html
 
 ## Panel Margin
 
