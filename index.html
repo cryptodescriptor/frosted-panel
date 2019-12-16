@@ -16,6 +16,7 @@
 			width: 100%;
 			height: 100%;
 			display: block;
+			visibility: hidden;
 		}
 	</style>
 </head>
@@ -26,10 +27,12 @@
 
 	<script type="text/javascript">
 		var loading = document.querySelector('#loading');
+		var docWrapper = document.querySelector('#doc-wrappper');
 
 		window.addEventListener('message', function(event) {
 			if (event.data === 'hideLoad') {
 				loading.style.display = 'none';
+				docWrapper.style.visibility = 'visible';
 			}
 		}, false);
 	</script>
