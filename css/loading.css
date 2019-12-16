@@ -15,7 +15,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(249, 249, 250);
+  background: rgb(249, 249, 250);
 }
 
 @-webkit-keyframes delayedSpinner {
