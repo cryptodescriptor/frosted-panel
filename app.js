@@ -129,7 +129,7 @@ var frostedPanel = {
       c['imageWidth'] = this.e.img.getAttribute('width');
       c['imageHeight'] = this.e.img.getAttribute('height');
 
-      c['paddingTopBot'] = parseInt(
+      c['spaceTopBot'] = parseInt(
           document.body.getAttribute('space-top-bot')
         ) || 0;
 
@@ -329,7 +329,7 @@ var frostedPanel = {
     var panelH = wh[1];
 
     // Set html minHeight for padding effect
-    this.e.html.style.minHeight = (panelH + (this.config.paddingTopBot*2)) + 'px';
+    this.e.html.style.minHeight = (panelH + (this.config.spaceTopBot*2)) + 'px';
 
     // Get size of scaled background image
     var width_height_scale = this.calc_cover_size();
