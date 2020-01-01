@@ -216,32 +216,53 @@ var frostedPanel = {
     'h' : null
   },
 
-  toggle_auto : function(on, type, panelWidthOrHeightPx) {
+  toggle_auto : function(type, w_or_h) {
+    this.e.content.style[w_or_h] = 'auto';
+    this.e.panel.style[w_or_h] = 'auto';
+    this.auto[type] = true;
+  },
+
+  toggle_fixed : function(w_or_h, type, panelWidthOrHeightPx) {
+    this.e.content.style[w_or_h] = panelWidthOrHeightPx - (this.config.contentMargin*2) + 'px';
+    this.e.panel.style[w_or_h] = panelWidthOrHeightPx + 'px';
+    this.auto[type] = false;
+  },
+
+  toggle_auto_or_fixed : function(on, type, panelWidthOrHeightPx) {
     var w_or_h = (type === 'w') ? 'width' : 'height';
+
     if ((on === true) && (this.auto[type] === false || this.auto[type] === null)) {
-      this.e.content.style[w_or_h] = 'auto';
-      this.e.panel.style[w_or_h] = 'auto';
-      this.auto[type] = true;
+      this.toggle_auto(type, w_or_h);
     } else if (on === false) {
-      this.e.content.style[w_or_h] = panelWidthOrHeightPx - (this.config.contentMargin*2) + 'px';
-      this.e.panel.style[w_or_h] = panelWidthOrHeightPx + 'px';
-      this.auto[type] = false;
+      this.toggle_fixed(w_or_h, type, panelWidthOrHeightPx);
     }
+  },
+
+  set_percentage : function(viewportWidthOrHeight, val, type) {
+    var px = (viewportWidthOrHeight/100)*val.replace('%', '');
+    this.toggle_auto_or_fixed(false, type, px);
+    return px;
+  },
+
+  set_fixed : function(val, type) {
+    var px = parseInt(val.replace('px', ''));
+    this.toggle_auto_or_fixed(false, type, px);
+    return px;
+  },
+
+  set_auto : function(type) {
+    var m = (this.config.contentMargin*2);
+    this.toggle_auto_or_fixed(true, type);
+    return ((type === 'w') ? (this.e.content.clientWidth+m) : (this.e.content.clientHeight+m));
   },
 
   set_pixel_val : function(val, viewportWidthOrHeight, type) {
     if (val.endsWith('%')) {
-      var px = (viewportWidthOrHeight/100)*val.replace('%', '');
-      this.toggle_auto(false, type, px);
-      return px;
+      return this.set_percentage(viewportWidthOrHeight, val, type);
     } else if (val.endsWith('px')) {
-      var px = parseInt(val.replace('px', ''));
-      this.toggle_auto(false, type, px);
-      return px;
+      return this.set_fixed(val, type);
     } else if (val.toLowerCase() === 'auto') {
-      var m = (this.config.contentMargin*2);
-      this.toggle_auto(true, type);
-      return ((type === 'w') ? (this.e.content.clientWidth+m) : (this.e.content.clientHeight+m));
+      return this.set_auto(type);
     }
   },
 
