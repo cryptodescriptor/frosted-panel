@@ -126,7 +126,7 @@ var frostedPanel = {
   valid_breakpoint_type : function(brType) {
     var brTypes = ['min-width', 'max-width'];
 
-    if (brTypes.indexOf(brType) === -1) {
+    if (brTypes.indexOf(brType.toLowerCase()) === -1) {
       this.error('Invalid breakpoint-type attribute!');
       return false;
     }
@@ -148,9 +148,11 @@ var frostedPanel = {
           this.e.content.getAttribute('content-margin')
         ) || 0;
 
-      var brType = this.e.panel.getAttribute('breakpoint-type').toLowerCase();
+      var brType = this.e.panel.getAttribute('breakpoint-type');
 
-      if (!this.valid_breakpoint_type(brType)) {
+      if (!brType) {
+        brType = 'min-width';
+      } else if (!this.valid_breakpoint_type(brType)) {
         return false;
       }
 
