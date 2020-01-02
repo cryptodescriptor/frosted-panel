@@ -119,8 +119,19 @@ var frostedPanel = {
 
     // sort: ascending min-width, descending max-width
     this.config.breakpoints = this.config.breakpoints.sort(function(a, b) {
-      return (self.config.maxWidth === true) ? (b[0] - a[0]) : (a[0] - b[0]);
+      return (self.config.brType === 'max-width') ? (b[0] - a[0]) : (a[0] - b[0]);
     });
+  },
+
+  valid_breakpoint_type : function(brType) {
+    var brTypes = ['min-width', 'max-width'];
+
+    if (brTypes.indexOf(brType) === -1) {
+      this.error('Invalid breakpoint-type attribute!');
+      return false;
+    }
+
+    return true;
   },
 
   load_attributes : function() {
@@ -137,9 +148,15 @@ var frostedPanel = {
           this.e.content.getAttribute('content-margin')
         ) || 0;
 
-      c['brType'] = this.e.panel.getAttribute('breakpoint-type') || 'min-width';
+      var brType = this.e.panel.getAttribute('breakpoint-type').toLowerCase();
 
-      c['maxWidth'] = this.config.brType.toLowerCase() === 'max-width';
+      if (!this.valid_breakpoint_type(brType)) {
+        return false;
+      }
+
+      c['brType'] = brType;
+
+      return true;
   },
 
   load_config : function() {
@@ -172,7 +189,9 @@ var frostedPanel = {
     this.config['height'] = wh[1];
 
     // load the rest of the attributes
-    this.load_attributes();
+    if (!this.load_attributes()) {
+      return false;
+    }
 
     // load breakpoints
     this.load_breakpoints();
@@ -181,8 +200,7 @@ var frostedPanel = {
   },
 
   is_suitable_breakpoint : function(breakpoint) {
-    var string = (this.config.maxWidth === true) ? 'max-width' : 'min-width';
-    return window.matchMedia('('+string+': '+breakpoint[0]+'px)').matches;
+    return window.matchMedia('('+this.config.brType+': '+breakpoint[0]+'px)').matches;
   },
 
   find_suitable_breakpoint : function() {
