@@ -15,9 +15,6 @@ html, body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 auto;
-  flex: 0 0 auto;
 }
 
 #loading {
@@ -28,6 +25,9 @@ html, body {
   width: 100%;
   height: 100%;
   background: rgb(249, 249, 250);
+  -webkit-box-flex: 0;
+    -ms-flex: 0 0 auto;
+      flex: 0 0 auto;
 }
 
 @-webkit-keyframes delayedSpinner {

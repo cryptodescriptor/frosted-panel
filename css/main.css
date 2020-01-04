@@ -21,9 +21,6 @@ body {
 	-webkit-box-pack: center;
 	    -ms-flex-pack: center;
 	        justify-content: center;
-	-webkit-box-flex: 0;
-	-ms-flex: 0 0 auto;
-	flex: 0 0 auto;
 }
 
 .frosted-panel {
@@ -35,6 +32,9 @@ body {
 	visibility: hidden;
 	width: 0;
 	height: 0;
+	-webkit-box-flex: 0;
+		-ms-flex: 0 0 auto;
+			flex: 0 0 auto;
 }
 
 svg {
