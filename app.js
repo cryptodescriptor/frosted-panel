@@ -115,11 +115,9 @@ var frostedPanel = {
       }
     }
 
-    var self = this;
-
     // sort: ascending min-width, descending max-width
     this.config.breakpoints = this.config.breakpoints.sort(function(a, b) {
-      return (self.config.brType === 'max-width') ? (b[0] - a[0]) : (a[0] - b[0]);
+      return (frostedPanel.config.brType === 'max-width') ? (b[0] - a[0]) : (a[0] - b[0]);
     });
   },
 
@@ -445,10 +443,8 @@ var frostedPanel = {
     // Set content margin
     this.e.content.style.margin = frostedPanel.config.contentMargin + 'px';
 
-    var self = this;
-
     window.onload =  function() {
-      self.start_panel.call(self);
+      frostedPanel.start_panel();
     };
   }
 }
