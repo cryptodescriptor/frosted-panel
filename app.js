@@ -146,11 +146,9 @@ var frostedPanel = {
           this.e.content.getAttribute('content-margin')
         ) || 0;
 
-      var brType = this.e.panel.getAttribute('breakpoint-type');
+      var brType = this.e.panel.getAttribute('breakpoint-type') || 'min-width';
 
-      if (!brType) {
-        brType = 'min-width';
-      } else if (!this.valid_breakpoint_type(brType)) {
+      if (!this.valid_breakpoint_type(brType)) {
         return false;
       }
 
