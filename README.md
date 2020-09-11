@@ -62,7 +62,7 @@ Values can be one of three types: `px`, `%`, `auto`:
 
 ## Content & Content Margin
 
-All the content that you wish to be inside the panel, must be nested within the `content` div. If you want to control the margin around the content (the space between the content and the edge of the panel), then you must do so by setting `content-margin` attribute on the `div`, with a pixel value. If this attribute is missing or empty, then the margin will default to 0.
+All the content that you wish to be inside the panel, must be nested within the `content` div. If you want to control the margin around the content (the space between the content and the edge of the panel), then you must do so by setting `content-margin` attribute on the div, with a pixel value. If this attribute is missing or empty, then the margin will default to 0.
 
     <div class="content" content-margin="5px">
 
