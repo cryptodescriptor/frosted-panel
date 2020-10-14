@@ -438,7 +438,7 @@ var frostedPanel = {
     // Set content margin
     this.e.content.style.margin = frostedPanel.config.contentMargin + 'px';
 
-    window.onload =  function() {
+    window.onload = function() {
       frostedPanel.start_panel();
     };
   }
