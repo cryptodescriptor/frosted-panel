@@ -292,15 +292,15 @@ var frostedPanel = {
 
     // Step 2 - Work out which ratio is greater
     if (imageRatio >= coverRatio) {
-        // The Height is our constant
-        var coverHeight = object.offsetHeight;
-        var scale = (coverHeight / height);
-        var coverWidth = width * scale;
+      // The Height is our constant
+      var coverHeight = object.offsetHeight;
+      var scale = (coverHeight / height);
+      var coverWidth = width * scale;
     } else {
-        // The Width is our constant
-        var coverWidth = object.offsetWidth;
-        var scale = (coverWidth / width);
-        var coverHeight = height * scale;
+      // The Width is our constant
+      var coverWidth = object.offsetWidth;
+      var scale = (coverWidth / width);
+      var coverHeight = height * scale;
     }
 
     return [coverWidth, coverHeight, scale];
