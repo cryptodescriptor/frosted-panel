@@ -294,12 +294,12 @@ var frostedPanel = {
     if (imageRatio >= coverRatio) {
       // The Height is our constant
       var coverHeight = object.offsetHeight;
-      var scale = (coverHeight / height);
+      var scale = coverHeight / height;
       var coverWidth = width * scale;
     } else {
       // The Width is our constant
       var coverWidth = object.offsetWidth;
-      var scale = (coverWidth / width);
+      var scale = coverWidth / width;
       var coverHeight = height * scale;
     }
 
@@ -375,8 +375,8 @@ var frostedPanel = {
     var cropY = (imageHeight-viewportHeight)/2;
 
     // Calculate how much we need to pan
-    var panW = (-(viewportWidth-panelW)/2) - cropX;
-    var panH = (-(viewportHeight-panelH)/2) - cropY;
+    var panW = -(viewportWidth-panelW)/2 - cropX;
+    var panH = -(viewportHeight-panelH)/2 - cropY;
 
     var scale = width_height_scale[2];
 
