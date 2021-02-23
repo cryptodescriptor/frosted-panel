@@ -34,52 +34,50 @@ var frostedPanel = {
 
   validate_wh : function(val) {
     var val = val.toLowerCase();
-    var num;
+    var valid_num = false;
 
     if (val === 'auto') {
       return true;
     } else if (!val.endsWith('px') && !val.endsWith('%')) {
       return false;
     } else if (val.endsWith('px')) {
-      num = this.valid_num(val.replace('px', ''));
+      valid_num = this.valid_num(val.replace('px', ''));
     } else if (val.endsWith('%')) {
-      num = this.valid_num(val.replace('%', ''));
+      valid_num = this.valid_num(val.replace('%', ''));
     }
 
-    return (!num) ? false : true;
+    return valid_num;
   },
 
   ignoring_breakpoint_err : function(breakpoint) {
-    this.error('Ignoring breakpoint: "' + breakpoint + '"');
+    return this.error('Ignoring breakpoint: "' + breakpoint + '"');
   },
 
   invalid_breakpoint_err : function(breakpoint, val, i) {
     var joined = breakpoint.join(' ');
-
-    this.error('Invalid value "' + val + '" at breakpoint: "' + 
-      joined + '", index: ' + i);
-
-    this.ignoring_breakpoint_err(joined);
+    this.error('Invalid value "' + val + '" at breakpoint: "' + joined + '", index: ' + i);
+    return this.ignoring_breakpoint_err(joined);
   },
 
-  valid_breakpoint : function(breakpoint) {
-    // should be 3 in length
+  valid_breakpoint_arg_length : function(breakpoint) {
     if (breakpoint.length !== 3) {
       var joined = breakpoint.join(' ');
       this.error('Expected 3 values at breakpoint: "' + joined + '"');
-      this.ignoring_breakpoint_err(joined);
-      return false;
+      return this.ignoring_breakpoint_err(joined);
     }
+    return true;
+  },
 
-    // validate actual breakpoint width
+  valid_breakpoint_property : function(breakpoint) {
     var b = breakpoint[0].toLowerCase();
-
     // make sure breakpoint ends with px and is a number
     if (!b.endsWith('px') || !this.valid_num(b.replace('px', ''))) {
-      this.invalid_breakpoint_err(breakpoint, b, 0);
-      return false;
+      return this.invalid_breakpoint_err(breakpoint, b, 0);
     }
+    return true;
+  },
 
+  valid_breakpoint_values : function(breakpoint) {
     // validate width and height values
     var val;
 
@@ -87,22 +85,24 @@ var frostedPanel = {
       val = breakpoint[i];
 
       if (!this.validate_wh(val)) {
-        this.invalid_breakpoint_err(breakpoint, val, i);
-        return false;
+        return this.invalid_breakpoint_err(breakpoint, val, i);
       }
     }
     return true;
   },
 
-  load_breakpoints : function() {
-    // check for breakpoint attr
-    var panel_breakpoints = this.e.panel.getAttribute('breakpoints');
+  valid_breakpoint : function(breakpoint) {
+    if (
+        !this.valid_breakpoint_arg_length(breakpoint) ||
+        !this.valid_breakpoint_property(breakpoint) ||
+        !this.valid_breakpoint_values(breakpoint)
+      ) {
+      return false;
+    }
+    return true;
+  },
 
-    // if attribute missing, return
-    if (!panel_breakpoints) return;
-
-    // parse and validate breakpoints
-    var breakpoints = panel_breakpoints.split(',');
+  store_valid_breakpoints : function(breakpoints) {
     var breakpoint;
 
     for (var i = 0; i < breakpoints.length; i++) {
@@ -115,6 +115,18 @@ var frostedPanel = {
         this.config.breakpoints.push(breakpoint);
       }
     }
+  },
+
+  load_breakpoints : function() {
+    // check for breakpoint attr
+    var panel_breakpoints = this.e.panel.getAttribute('breakpoints');
+
+    // if attribute missing, return
+    if (!panel_breakpoints) return;
+
+    // parse and store valid breakpoints
+    var breakpoints = panel_breakpoints.split(',');
+    this.store_valid_breakpoints(breakpoints);
 
     // sort: ascending min-width, descending max-width
     this.config.breakpoints = this.config.breakpoints.sort(function(a, b) {
@@ -137,56 +149,55 @@ var frostedPanel = {
 
       c['imageWidth'] = this.e.img.getAttribute('width');
       c['imageHeight'] = this.e.img.getAttribute('height');
-
-      c['spaceTopBot'] = parseInt(
-          document.body.getAttribute('space-top-bot')
-        ) || 0;
-
-      c['contentMargin'] = parseInt(
-          this.e.content.getAttribute('content-margin')
-        ) || 0;
+      c['spaceTopBot'] = parseInt(document.body.getAttribute('space-top-bot')) || 0;
+      c['contentMargin'] = parseInt(this.e.content.getAttribute('content-margin')) || 0;
 
       var brType = this.e.panel.getAttribute('breakpoint-type') || 'min-width';
 
-      if (!this.valid_breakpoint_type(brType)) {
-        return false;
-      }
+      if (!this.valid_breakpoint_type(brType)) return false;
 
       c['brType'] = brType;
 
       return true;
   },
 
+  attribute_exists : function(attr) {
+    return (!attr) ? this.error('Empty/Missing required attr "' + attr + '"!') : true;
+  },
+
+  valid_attribute_length : function(attr, wh) {
+    if (wh.length !== 2) {
+      return this.error('Unexpected length "' + wh.length + '" for "' + attr + '" attr!');
+    }
+    return true;
+  },
+
+  valid_panel_wh_values(attr, wh) {
+    for (var i = 0; i < wh.length; i++) {
+      if (!this.validate_wh(wh[i])) {
+        return this.error('Invalid value "' + wh[0] + '" for "' + attr + '" attr!');
+      }
+    }
+    return true;
+  },
+
   load_config : function() {
     var attr = 'panel-dimensions';
     var panel_dimensions = this.e.panel.getAttribute(attr);
 
-    // check attribute exists and isnt empty
-    if (!panel_dimensions) {
-      return this.error('Empty/Missing required attr "'+attr+'"!');
-    }
+    if (!this.attribute_exists(panel_dimensions)) return false;
 
     var wh = panel_dimensions.split(' ');
 
-    // verify we have 2 values
-    if (wh.length !== 2) {
-      return this.error('Unexpected length "' + wh.length + '" for "'+attr+'" attr!');
-    }
-
-    // validate width and height values
-    for (var i = 0; i < wh.length; i++) {
-      if (!this.validate_wh(wh[i])) {
-        return this.error('Invalid value "' + wh[0] + '" for "'+attr+'" attr!');
-      }
+    if (!this.valid_attribute_length(attr, wh) || !this.valid_panel_wh_values(attr, wh)) {
+      return false;
     }
 
     this.config['width'] = wh[0];
     this.config['height'] = wh[1];
 
     // load the rest of the attributes
-    if (!this.load_attributes()) {
-      return false;
-    }
+    if (!this.load_attributes()) return false;
 
     // load breakpoints
     this.load_breakpoints();
@@ -199,16 +210,15 @@ var frostedPanel = {
   },
 
   find_suitable_breakpoint : function() {
-    var current, breakpoint = null;
+    var breakpoint = null;
 
-    for (var i = 0; i < this.config.breakpoints.length; i++) {
-      current = this.config.breakpoints[i];
-      if (this.is_suitable_breakpoint(current)) {
-        breakpoint = current;
-        continue;
+    for (var i = this.config.breakpoints.length-1; i >= 0; i--) {
+      if (this.is_suitable_breakpoint(this.config.breakpoints[i])) {
+        breakpoint = this.config.breakpoints[i];
+        break;
       }
-      break;
     }
+
     return breakpoint;
   },
 
@@ -241,12 +251,12 @@ var frostedPanel = {
     this.auto[type] = false;
   },
 
-  toggle_auto_or_fixed : function(on, type, panelWidthOrHeightPx) {
+  toggle_auto_or_fixed : function(toggle_auto, type, panelWidthOrHeightPx) {
     var w_or_h = (type === 'w') ? 'width' : 'height';
 
-    if ((on === true) && (this.auto[type] === false || this.auto[type] === null)) {
+    if ((toggle_auto === true) && (this.auto[type] === false || this.auto[type] === null)) {
       this.toggle_auto(type, w_or_h);
-    } else if (on === false) {
+    } else if (toggle_auto === false) {
       this.toggle_fixed(w_or_h, type, panelWidthOrHeightPx);
     }
   },
