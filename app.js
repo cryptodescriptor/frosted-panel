@@ -24,7 +24,6 @@ var frostedPanel = {
   },
 
   error : function(s) {
-    console.log(s);
     return false;
   },
 
