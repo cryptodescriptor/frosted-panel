@@ -171,7 +171,7 @@ var frostedPanel = {
     return true;
   },
 
-  valid_panel_wh_values(attr, wh) {
+  valid_panel_wh_values : function(attr, wh) {
     for (var i = 0; i < wh.length; i++) {
       if (!this.validate_wh(wh[i])) {
         return this.error('Invalid value "' + wh[0] + '" for "' + attr + '" attr!');
