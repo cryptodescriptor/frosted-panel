@@ -420,8 +420,6 @@ var frostedPanel = {
     }
 
     img.src = src;
-
-    if (img.complete) img.onload();
   },
   
   start_panel : function() {
