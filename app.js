@@ -234,48 +234,40 @@ var frostedPanel = {
   },
 
   auto : {
-    'w' : null,
-    'h' : null
+    'width' : null,
+    'height' : null
   },
 
-  toggle_auto : function(type, w_or_h) {
-    this.e.content.style[w_or_h] = 'auto';
-    this.e.panel.style[w_or_h] = 'auto';
-    this.auto[type] = true;
-  },
-
-  toggle_fixed : function(w_or_h, type, panelWidthOrHeightPx) {
-    this.e.content.style[w_or_h] = panelWidthOrHeightPx - (this.config.contentMargin*2) + 'px';
-    this.e.panel.style[w_or_h] = panelWidthOrHeightPx + 'px';
-    this.auto[type] = false;
-  },
-
-  toggle_auto_or_fixed : function(toggle_auto, type, panelWidthOrHeightPx) {
-    var w_or_h = (type === 'w') ? 'width' : 'height';
-
-    if ((toggle_auto === true) && (this.auto[type] === false || this.auto[type] === null)) {
-      this.toggle_auto(type, w_or_h);
-    } else if (toggle_auto === false) {
-      this.toggle_fixed(w_or_h, type, panelWidthOrHeightPx);
+  toggle_auto : function(type) {
+    if (this.auto[type] === false || this.auto[type] === null) {
+      this.e.content.style[type] = 'auto';
+      this.e.panel.style[type] = 'auto';
+      this.auto[type] = true;
     }
+  },
+
+  toggle_fixed : function(type, panelWidthOrHeightPx) {
+    this.e.content.style[type] = panelWidthOrHeightPx - (this.config.contentMargin*2) + 'px';
+    this.e.panel.style[type] = panelWidthOrHeightPx + 'px';
+    this.auto[type] = false;
   },
 
   set_percentage : function(viewportWidthOrHeight, val, type) {
     var px = (viewportWidthOrHeight/100)*val.replace('%', '');
-    this.toggle_auto_or_fixed(false, type, px);
+    this.toggle_fixed(type, px);
     return px;
   },
 
   set_fixed : function(val, type) {
     var px = parseInt(val.replace('px', ''));
-    this.toggle_auto_or_fixed(false, type, px);
+    this.toggle_fixed(type, px);
     return px;
   },
 
   set_auto : function(type) {
     var m = (this.config.contentMargin*2);
-    this.toggle_auto_or_fixed(true, type);
-    return ((type === 'w') ? (this.e.content.clientWidth+m) : (this.e.content.clientHeight+m));
+    this.toggle_auto(type);
+    return ((type === 'width') ? (this.e.content.clientWidth+m) : (this.e.content.clientHeight+m));
   },
 
   set_pixel_val : function(val, viewportWidthOrHeight, type) {
@@ -328,8 +320,8 @@ var frostedPanel = {
     }
 
     // Convert to pixels and set width + height
-    var w = this.set_pixel_val(w, viewportWidth, 'w');
-    var h = this.set_pixel_val(h, viewportHeight, 'h');
+    var w = this.set_pixel_val(w, viewportWidth, 'width');
+    var h = this.set_pixel_val(h, viewportHeight, 'height');
 
     // Return w,h so we can calc pan + zoom values
     return [w, h];
