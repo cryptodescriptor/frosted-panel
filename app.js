@@ -330,11 +330,9 @@ var frostedPanel = {
   previous_viewport_w : null,
   previous_viewport_h : null,
 
-  viewport_size_not_changed : function(viewportWidth, viewportHeight) {
-    return (
-        this.previous_viewport_w === viewportWidth &&
-        this.previous_viewport_h === viewportHeight
-      );
+  viewport_size_not_changed: function(w,h) {
+    return Math.abs(this.previous_viewport_w - w) < 1 &&
+           Math.abs(this.previous_viewport_h - h) < 1;
   },
 
   get_device_width_and_height : function() {
@@ -356,7 +354,7 @@ var frostedPanel = {
     }
 
     this.previous_viewport_w = viewportWidth;
-    this.previous_viewport_h = viewportWidth;
+    this.previous_viewport_h = viewportHeight;
 
     // Set Panel width and height
     var wh = this.set_panel_width_and_height(viewportWidth, viewportHeight);
@@ -404,11 +402,19 @@ var frostedPanel = {
     
     var img = new Image();
 
-    img.onload = function() {
-      if (!this.started) { 
-        this.started = true;
+    var self = this;
+
+    function startIfNotStarted() {
+      if (!self.started) {
+        self.started = true;
         callback();
       }
+    }
+
+    if (img.complete) {
+      startIfNotStarted();
+    } else {
+      img.onload = startIfNotStarted;
     }
 
     img.src = src;
